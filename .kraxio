@@ -1,0 +1,17 @@
+{
+  "paths": {
+    "root": "src"
+  },
+  "tools": {
+    "downloader": "",
+    "miniterm": "",
+    "telnet": "/usr/bin/telnet",
+    "enumSerials": "/usr/bin/pyserial-ports",
+    "paths": "/home/vlinnik/.local/lib/python3.12/site-packages/../Scripts/",
+    "upydev": "/home/vlinnik/.local/bin/upydev",
+    "serial": "/home/vlinnik/.local/bin/mpremote"
+  },
+  "project": "ETALON-250412",
+  "target": "/dev/ttyUSB0",
+  "is_serial": true
+}

@@ -1,0 +1,10 @@
+.pybuild
+build
+debhelper-build-stamp
+python3-*
+*.egg-info
+__pycache__
+concrete.rcc
+concrete6.dat
+persist.dat
+pyplc_develop

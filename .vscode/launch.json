@@ -5,13 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python Debugger: Master",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "src/master.py",
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {"PYTHONPYCACHEPREFIX":"${workspaceFolder}/__pycache__"}
+        },
+        {
+            "name": "Python Debugger: Slave",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "src/slave.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {"PYTHONPYCACHEPREFIX":"${workspaceFolder}/__pycache__"},
+            "args": ["--conf","slave","--port","9005","--cli","2456"]
         },
         {
             "name": "Simulator",

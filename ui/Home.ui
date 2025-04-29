@@ -779,8 +779,8 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
   <widget class="Animation" name="animation_5">
    <property name="geometry">
     <rect>
-     <x>1560</x>
-     <y>420</y>
+     <x>1559</x>
+     <y>418</y>
      <width>32</width>
      <height>95</height>
     </rect>
@@ -941,9 +941,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="text">
      <string/>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
@@ -1002,9 +999,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -1119,9 +1113,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="text">
      <string/>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
@@ -1180,9 +1171,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="text">
      <string/>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
@@ -1240,9 +1228,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -1321,9 +1306,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="text">
      <string/>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
@@ -1382,9 +1364,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -1462,9 +1441,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="text">
      <string/>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
@@ -1504,9 +1480,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -1565,9 +1538,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -1683,9 +1653,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="text">
      <string/>
     </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
@@ -1743,9 +1710,6 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -2439,6 +2403,44 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <set>Animation::Ceaseless</set>
     </property>
    </widget>
+   <widget class="QLabel" name="loaded_1">
+    <property name="geometry">
+     <rect>
+      <x>74</x>
+      <y>64</y>
+      <width>22</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Бункер загружен</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/concrete.qrc">:/concrete/red.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="full_open_1">
+    <property name="geometry">
+     <rect>
+      <x>75</x>
+      <y>141</y>
+      <width>22</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>полное открытие</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/concrete.qrc">:/concrete/green.png</pixmap>
+    </property>
+   </widget>
   </widget>
   <widget class="MContainerPanel" name="mcontainerpanel">
    <property name="geometry">
@@ -2496,6 +2498,266 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    </property>
    <property name="style" stdset="0">
     <string>sys</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_1">
+   <property name="geometry">
+    <rect>
+     <x>1130</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_2">
+   <property name="geometry">
+    <rect>
+     <x>1267</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_3">
+   <property name="geometry">
+    <rect>
+     <x>1402</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_4">
+   <property name="geometry">
+    <rect>
+     <x>1551</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_5">
+   <property name="geometry">
+    <rect>
+     <x>46</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_6">
+   <property name="geometry">
+    <rect>
+     <x>189</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_7">
+   <property name="geometry">
+    <rect>
+     <x>337</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_8">
+   <property name="geometry">
+    <rect>
+     <x>482</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_9">
+   <property name="geometry">
+    <rect>
+     <x>623</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ack_10">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>420</y>
+     <width>54</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/concrete.qrc">
+     <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
   <zorder>dosator_5</zorder>
@@ -2574,6 +2836,16 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
   <zorder>tconveyorpanel</zorder>
   <zorder>scanTime</zorder>
   <zorder>powered</zorder>
+  <zorder>ack_1</zorder>
+  <zorder>ack_2</zorder>
+  <zorder>ack_3</zorder>
+  <zorder>ack_4</zorder>
+  <zorder>ack_5</zorder>
+  <zorder>ack_6</zorder>
+  <zorder>ack_7</zorder>
+  <zorder>ack_8</zorder>
+  <zorder>ack_9</zorder>
+  <zorder>ack_10</zorder>
  </widget>
  <customwidgets>
   <customwidget>

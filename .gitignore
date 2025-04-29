@@ -8,3 +8,10 @@ concrete.rcc
 concrete6.dat
 persist.dat
 pyplc_develop
+backup
+slave.dat
+krax.dat
+persist.json
+src.dat
+master.dat
+slave_conf.dat

@@ -27,15 +27,20 @@ def main():
     import argparse
     args = argparse.ArgumentParser(sys.argv)
     args.add_argument('--device', action='store', type=str, default='192.168.2.10', help='IP address of the device')
+    args.add_argument('--slave', action='store', type=str, default='192.168.2.11', help='IP address of the slave device')
     args.add_argument('--simulator', action='store_true', default=False, help='Same as --device 127.0.0.1')
     ns = args.parse_known_args()[0]
     if ns.simulator:
         ns.device = '127.0.0.1'
+        ns.slave = '127.0.0.1'
         import subprocess
-        logic = subprocess.Popen(["python3", "src/krax.py"])
+        logic = subprocess.Popen(["python3", "src/master.py"])
+        slave = subprocess.Popen(["python3", "src/slave.py","--conf=slave_conf","--port=9005","--cli=2456"])
     
     dev = PYPLC(ns.device)
+    sec = PYPLC(ns.slave,port=9005)
     app.devices['PLC'] = dev
+    app.devices['SLAVE'] = sec
     
     Home = app.window('ui/Home.ui',ctx={"whats_inside":whats_inside})
     Additions = app.window('ui/Additions.ui')
@@ -52,13 +57,16 @@ def main():
     # Home.show()               
     
     dev.start(100)
+    sec.start(100)
     app.start( ctx = globals() )
     dev.stop( )
+    sec.stop( )
     
     concrete6.save( )
 
     if ns.simulator:
         logic.terminate( )
+        slave.terminate( )
         pass
     
 if __name__=='__main__':

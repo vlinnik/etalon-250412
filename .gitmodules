@@ -4,3 +4,6 @@
 [submodule "resources"]
 	path = resources
 	url = https://github.com/vlinnik/concretetheme.git
+[submodule "pyplc.git"]
+	path = pyplc.git
+	url = https://github.com/vlinnik/pyplc.git

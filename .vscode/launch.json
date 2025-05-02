@@ -52,6 +52,15 @@
             "justMyCode": false,
             "env": {"PYTHONPYCACHEPREFIX":"${workspaceFolder}/__pycache__"},
             "args": []
-        }
-    ]
+        },
+        {
+            "name": "Runtime Local",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "gui",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {"PYTHONPYCACHEPREFIX":"${workspaceFolder}/__pycache__"},
+            "args": ["--device","127.0.0.1","--slave","127.0.0.1"]
+        }    ]
 }

@@ -1947,6 +1947,14 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <height>475</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: lightGray;
+font-size: 9pt;
+padding: 10px;</string>
+   </property>
+   <property name="depth">
+    <number>1200</number>
+   </property>
    <property name="canvasBackground">
     <brush brushstyle="SolidPattern">
      <color alpha="255">
@@ -1955,6 +1963,25 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
       <blue>70</blue>
      </color>
     </brush>
+   </property>
+  </widget>
+  <widget class="QLabel" name="mixer_i_1">
+   <property name="geometry">
+    <rect>
+     <x>63</x>
+     <y>385</y>
+     <width>87</width>
+     <height>42</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>000</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="style" stdset="0">
+    <string>huge</string>
    </property>
   </widget>
  </widget>

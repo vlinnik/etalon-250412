@@ -120,6 +120,16 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
 	background-color: rgb(46, 194, 126);
 	color: white;
 }
+QCommandLinkButton
+{
+	border: 1px solid gray;
+	border-radius: 4px;
+	color: white;
+}
+QCommandLinkButton:checked
+{
+	background-color: green;
+}
 </string>
   </property>
   <widget class="Animation" name="mixer_1">
@@ -181,7 +191,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="geometry">
      <rect>
       <x>18</x>
-      <y>130</y>
+      <y>115</y>
       <width>22</width>
       <height>22</height>
      </rect>
@@ -197,7 +207,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <property name="geometry">
      <rect>
       <x>48</x>
-      <y>130</y>
+      <y>115</y>
       <width>22</width>
       <height>22</height>
      </rect>
@@ -2317,7 +2327,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>670</y>
+     <y>580</y>
      <width>392</width>
      <height>54</height>
     </rect>
@@ -2347,7 +2357,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <property name="geometry">
     <rect>
      <x>892</x>
-     <y>220</y>
+     <y>218</y>
      <width>176</width>
      <height>248</height>
     </rect>
@@ -2456,7 +2466,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <property name="geometry">
     <rect>
      <x>880</x>
-     <y>480</y>
+     <y>478</y>
      <width>204</width>
      <height>93</height>
     </rect>
@@ -2760,6 +2770,147 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="heartbeat">
+   <property name="geometry">
+    <rect>
+     <x>75</x>
+     <y>785</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Индикация обмена между MASTER&lt;-&gt;SLAVE</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../resources/concrete.qrc">:/concrete/heart.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>badge</string>
+   </property>
+  </widget>
+  <widget class="QCommandLinkButton" name="filter_1">
+   <property name="geometry">
+    <rect>
+     <x>897</x>
+     <y>190</y>
+     <width>163</width>
+     <height>66</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ВКЛЮЧИТЬ</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/images/filter.png</normaloff>:/images/filter.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="description">
+    <string>фильтр</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="forbid_1">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>620</y>
+     <width>125</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>НЕ ЗАГРУЖАТЬ</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>danger</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="breakpoint_1">
+   <property name="geometry">
+    <rect>
+     <x>1360</x>
+     <y>620</y>
+     <width>125</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>НЕ НАБИРАТЬ</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>warning</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>1210</x>
+     <y>557</y>
+     <width>113</width>
+     <height>39</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit
+{
+	border: 1px solid red;
+	border-radius: 4px;
+	padding: 4px;
+}</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>ВОДЫ</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="unloading">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>638</y>
+     <width>150</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ЗАГРУЗКА В ПБ</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="style" stdset="0">
+    <string>sys</string>
+   </property>
+  </widget>
   <zorder>dosator_5</zorder>
   <zorder>container_16</zorder>
   <zorder>container_17</zorder>
@@ -2846,6 +2997,12 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
   <zorder>ack_8</zorder>
   <zorder>ack_9</zorder>
   <zorder>ack_10</zorder>
+  <zorder>heartbeat</zorder>
+  <zorder>filter_1</zorder>
+  <zorder>forbid_1</zorder>
+  <zorder>breakpoint_1</zorder>
+  <zorder>lineEdit</zorder>
+  <zorder>unloading</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2882,6 +3039,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
  </customwidgets>
  <resources>
   <include location="../resources/concrete.qrc"/>
+  <include location="../images.qrc"/>
  </resources>
  <connections/>
 </ui>

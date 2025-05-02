@@ -11,6 +11,8 @@ from project import name as project_name
 from pyplc.utils.subscriber import Subscriber
 from pyplc.utils.latch import RS
 from pyplc.utils.trig import FTRIG
+from pyplc.utils.misc import BLINK
+from concrete.vibrator import UnloadHelper
 
 print(f'\tЗапуск проекта {project_name}, управление цементом/водой/ХД/смесителем')
 
@@ -64,6 +66,13 @@ dcement_2 = Dosator(m = lambda: cement_m_2.m, out=plc.DCEMENT_OPEN_2, closed=plc
 # дозатор цемента #3. набор шнеком
 auger_3 = Container(m = lambda: cement_m_3.m, out=plc.AUGER_ON_3, max_sp=1000,lock=Lock(key=~plc.DCEMENT_CLOSED_3))
 dcement_3 = Dosator(m = lambda: cement_m_3.m, out=plc.DCEMENT_OPEN_3, closed=plc.DCEMENT_CLOSED_3, containers=( auger_3,),lock=Lock(key=lambda: plc.AUGER_ON_3 or not plc.MIXER_ISON_1)  )
+
+aerator_1 = BLINK(enable=plc.AUGER_ON_1,q=plc.AERATOR_ON_1)
+aerator_2 = BLINK(enable=plc.AUGER_ON_2,q=plc.AERATOR_ON_2)
+aerator_3 = BLINK(enable=plc.AUGER_ON_3,q=plc.AERATOR_ON_3)
+dc_vibrator_1 = UnloadHelper(dosator=dcement_1,weight=cement_m_1,q=plc.DC_VIBRATOR_ON_1)
+dc_vibrator_2 = UnloadHelper(dosator=dcement_2,weight=cement_m_2,q=plc.DC_VIBRATOR_ON_2)
+dc_vibrator_3 = UnloadHelper(dosator=dcement_3,weight=cement_m_3,q=plc.DC_VIBRATOR_ON_3)
 
 # дозатор воды. набор 2мя насосами, грубо обоими, точно поочереди
 wpumps_1 = Adapter(outs=(plc.WPUMP_ON_1,plc.WPUMP_ON_2), sts=(~plc.WPUMP_ISON_1,~plc.WPUMP_ISON_2), turbo=True, best=1)
@@ -126,12 +135,12 @@ daddition_10 = ManualDosator( level = plc.DADDITION_ISEMPTY_10, out=plc.DADDITIO
 daddition_10.join('loaded',lambda: addition_10.loaded)
 
 #транспорт из под дозаторов инертных до промежуточной емкости, вопрос должен быть включен во время выгрузки или можно на выключенный
-tconveyor_1 = Transport( ison=plc.TCONVEYOR_ISON_1, out=plc.CONVEYOR_ON_1, power=plc.TCONVEYOR_ON_1)
-conveyor_1 = Transport( ison=plc.CONVEYOR_ISON_1, power=tconveyor_1.set_auto)
+tconveyor_1 = Transport( ison=plc.TCONVEYOR_ISON_1, power=plc.TCONVEYOR_ON_1,out=plc.CONVEYOR_ON_1,pt = 20)
+conveyor_1 = Transport( ison=plc.CONVEYOR_ISON_1, power=tconveyor_1.set_auto,pt=20)
 
 class Slave(Subscriber):
-  FIELDS= ('manual','emergency','go','busy','unload','unloading','tconveyor_ison','mc_opened_1','qreset')
-  SLAVE = namedtuple('SLAVE',('manual','emergency','go','busy','unload','unloading','tconveyor_ison','mc_opened_1','qreset'))
+  FIELDS= ('manual','emergency','go','busy','unload','unloading','tconveyor_ison','mc_opened_1','qreset','load','heartbeat')
+  SLAVE = namedtuple('SLAVE',('manual','emergency','go','busy','unload','unloading','tconveyor_ison','mc_opened_1','qreset','load','heartbeat'))
   def __init__(self,host: str,port: int=9005):
       super().__init__( host,port )
       self._go = False
@@ -158,6 +167,11 @@ class Slave(Subscriber):
   
   def emergency(self,val: bool):
     self.main.emergency = val
+    self.ack_go.unset( )
+    self.ack_unload.unset( )
+    
+  def set_load(self,load: float):
+    self.main.load = load
     
   @property
   def go(self):
@@ -196,9 +210,12 @@ if platform == 'linux':
 else:
   slave = Slave('192.168.2.11')
   
+factory_1.bind(Factory.load,slave.set_load )
+factory_1.bind(Factory.heartbeat,slave.main.__class__.heartbeat)
+
 mcontainer_1 = ManualDosator( closed=plc.MC_CLOSED_1, out=plc.MC_OPEN_1,helper=plc.MC_VIBRATOR_ON_1,dosator=slave)
 
-mixer_1 = Mixer(gate=gate_1, motor=motor_1, use_ack=True, flows=tuple(x.q for x in [
+mixer_1 = Mixer(gate=gate_1, motor=motor_1, use_ack=False, flows=tuple(x.q for x in [
                 auger_1, auger_2, auger_3, 
                 water_1, 
                 addition_1, addition_2, addition_3, addition_4, addition_5, addition_6, addition_7,daddition_8.expenses[0],daddition_9.expenses[0],daddition_10.expenses[0]]) )
@@ -231,7 +248,8 @@ other = ( factory_1,gate_1,motor_1,mixer_1,
           wpumps_1,
           conveyor_1,tconveyor_1,mcontainer_1,
           ready_1,loaded_1,manager_1,
-          slave,qreset
+          slave,qreset,
+          aerator_1,aerator_2,aerator_3,dc_vibrator_1,dc_vibrator_2,dc_vibrator_3
         )
 
 stat = (0,0,0)
@@ -263,7 +281,7 @@ def term():
 
 instances = (profiler,)
 
-if platform=="linux":
+if platform=="linux" or True:
   from concrete.imitation import iGATE,iMOTOR,iVALVE,iWEIGHT,iROTARYFLOW
   from pyplc.utils.latch import RS 
   from pyplc.utils.misc import TON

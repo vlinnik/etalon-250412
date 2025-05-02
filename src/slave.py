@@ -4,6 +4,7 @@ from collections import namedtuple
 from project import name as project_name
 from concrete import Container,Dosator,Weight
 from concrete.counting import Expense,MoveFlow
+from concrete.vibrator import Vibrator,UnloadHelper
 from extension import Accelerator
 from pyplc.pou import POU
 from pyplc.utils.trig import TRIG
@@ -15,7 +16,7 @@ print(f'\tЗапуск проекта {project_name}, управление бу�
 
 if platform == 'vscode':
     PLC = namedtuple('PLC', ('FILLER_M_1', 'FILLER_M_2', 'FILLER_M_3', 'FILLER_M_4', 'FILLER_M_5', 'FILLER_M_6', 'DFILLER_CLOSED_1', 'DFILLER_CLOSED_2', 'DFILLER_CLOSED_3', 'DFILLER_CLOSED_4', 'DFILLER_CLOSED_5', 'DFILLER_CLOSED_6', 'FILLER_CLOSED_1', 'FILLER_CLOSED_2', 'FILLER_CLOSED_3', 'FILLER_CLOSED_4', 'FILLER_CLOSED_5', 'FILLER_CLOSED_6', 'FILLER_CLOSED_7', 'FILLER_CLOSED_8', 'FILLER_CLOSED_9', 'FILLER_CLOSED_10', 'FILLER_CLOSED_11', 'FILLER_CLOSED_12', 'DFILLER_OPEN_1',
-                     'DFILLER_OPEN_2', 'DFILLER_OPEN_3', 'DFILLER_OPEN_4', 'DFILLER_OPEN_5', 'DFILLER_OPEN_6', 'FILLER_OPEN_1', 'FILLER_OPEN_2', 'FILLER_OPEN_3', 'FILLER_OPEN_4', 'FILLER_OPEN_5', 'FILLER_OPEN_6', 'FILLER_OPEN_7', 'FILLER_OPEN_8', 'FILLER_OPEN_9', 'FILLER_OPEN_10', 'FILLER_OPEN_11', 'FILLER_OPEN_12', 'VIBRATOR_ON_1', 'VIBRATOR_ON_2', 'VIBRATOR_ON_3', 'VIBRATOR_ON_4', 'VIBRATOR_ON_5', 'VIBRATOR_ON_6', 'DF_VIBRATOR_ON_1', 'DF_VIBRATOR_ON_2', 'DF_VIBRATOR_ON_3'))
+                     'DFILLER_OPEN_2', 'DFILLER_OPEN_3', 'DFILLER_OPEN_4', 'DFILLER_OPEN_5', 'DFILLER_OPEN_6', 'FILLER_OPEN_1', 'FILLER_OPEN_2', 'FILLER_OPEN_3', 'FILLER_OPEN_4', 'FILLER_OPEN_5', 'FILLER_OPEN_6', 'FILLER_OPEN_7', 'FILLER_OPEN_8', 'FILLER_OPEN_9', 'FILLER_OPEN_10', 'FILLER_OPEN_11', 'FILLER_OPEN_12', 'VIBRATOR_ON_1', 'VIBRATOR_ON_2', 'VIBRATOR_ON_3', 'VIBRATOR_ON_4', 'VIBRATOR_ON_5', 'VIBRATOR_ON_6', 'DF_VIBRATOR_ON_1', 'DF_VIBRATOR_ON_2', 'DF_VIBRATOR_ON_3','HEARTBEAT_1'))
     plc = PLC()
     
 class Slave(POU):
@@ -32,6 +33,9 @@ class Slave(POU):
     busy = POU.var(False)
     unload = POU.var(False)
     unloading = POU.var(False)
+    
+    load = POU.output(float(0.0))
+    heartbeat = POU.output(False)
     
     expense_14 = POU.var(0.0)
     expense_15 = POU.var(0.0)
@@ -50,7 +54,10 @@ class Slave(POU):
         self.dosators = ( )
         self.mcontainer = tuple( MoveFlow( flow_in = c.q, out = lambda: self.mc_opened_1 ) for c in containers ) #в промежуточный
         self.expenses = tuple( Expense( f.q, lambda: self.qreset ) for f in self.mcontainer )   #в смесителе
-    
+        self.bind(Slave.load, self._load_changed)
+        self.bind(Slave.heartbeat, plc.HEARTBEAT_1) 
+    def _load_changed(self,load: float):
+        Weight.g_Load = load
     
     def set_dosators(self,*args):
         self.dosators = tuple(args)
@@ -64,13 +71,14 @@ class Slave(POU):
             if self.t_emergency():
                 for d in self.dosators: d.emergency(self.emergency)
                 self.t_unloading.unset( )
+                self.f_unloaded.clear( )
             
-            self.busy = any( (not d.ready for d in self.dosators) )
+            self.busy = all( (not d.ready for d in self.dosators) )
+            self.unloading = self.t_unloading( )
             for d in self.dosators:
                 d.count = self.count
                 d.unload = self.unload
                 d.go = self.go
-            self.unloading = self.t_unloading( )
                         
             index = 14
             weight = 0.0
@@ -118,13 +126,27 @@ dfiller_4 = Dosator( m = lambda: filler_m_4.m, out=plc.DFILLER_OPEN_4,closed=plc
 dfiller_5 = Dosator( m = lambda: filler_m_5.m, out=plc.DFILLER_OPEN_5,closed=plc.DFILLER_CLOSED_5,containers=(filler_5,),lock=Lock(key=lambda: not slave.tconveyor_ison))
 dfiller_6 = Dosator( m = lambda: filler_m_6.m, out=plc.DFILLER_OPEN_6,closed=plc.DFILLER_CLOSED_6,containers=(filler_6,),lock=Lock(key=lambda: not slave.tconveyor_ison))
 
+vibrator_1 = Vibrator( q = plc.VIBRATOR_ON_1, containers = (plc.FILLER_OPEN_1,plc.FILLER_OPEN_2))
+vibrator_2 = Vibrator( q = plc.VIBRATOR_ON_2, containers = (plc.FILLER_OPEN_3,plc.FILLER_OPEN_4))
+vibrator_3 = Vibrator( q = plc.VIBRATOR_ON_3, containers = (plc.FILLER_OPEN_5,plc.FILLER_OPEN_6))
+vibrator_4 = Vibrator( q = plc.VIBRATOR_ON_4, containers = (plc.FILLER_OPEN_7,plc.FILLER_OPEN_8))
+vibrator_5 = Vibrator( q = plc.VIBRATOR_ON_5, containers = (plc.FILLER_OPEN_9,plc.FILLER_OPEN_10))
+vibrator_6 = Vibrator( q = plc.VIBRATOR_ON_6, containers = (plc.FILLER_OPEN_11,plc.FILLER_OPEN_12))
+
+df_vibrator_1 = UnloadHelper( q=plc.DF_VIBRATOR_ON_1, dosator=dfiller_1, weight=filler_m_1 )
+df_vibrator_2 = UnloadHelper( q=plc.DF_VIBRATOR_ON_2, dosator=dfiller_2, weight=filler_m_2 )
+df_vibrator_3 = UnloadHelper( q=plc.DF_VIBRATOR_ON_3, dosator=dfiller_1, weight=filler_m_3 )
+
 slave.set_dosators( dfiller_1,dfiller_2,dfiller_3,dfiller_4,dfiller_5,dfiller_6 )
 
-instances = (filler_m_1,filler_m_2,filler_m_3,filler_m_4,filler_m_5,filler_m_6,
+instances = (
+            slave,
+            filler_m_1,filler_m_2,filler_m_3,filler_m_4,filler_m_5,filler_m_6,
             dfiller_1,dfiller_2,dfiller_3,dfiller_4,dfiller_5,dfiller_6,
             twogate_1,twogate_2,twogate_3,twogate_4,twogate_5,twogate_6,
             filler_1,filler_2,filler_3,filler_4,filler_5,filler_6,
-            slave
+            vibrator_1,vibrator_2,vibrator_3,vibrator_4,vibrator_5,vibrator_6,
+            df_vibrator_1,df_vibrator_2,df_vibrator_3
             )
 
 if platform=='linux' or True:

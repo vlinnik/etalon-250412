@@ -22,5 +22,5 @@
         1
     ],
     "node_id": 1,
-    "init": {}
+    "init": { "rate":6 }
 }

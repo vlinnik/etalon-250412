@@ -21,7 +21,7 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {"PYTHONPYCACHEPREFIX":"${workspaceFolder}/__pycache__"},
-            "args": ["--conf","slave","--port","9005","--cli","2456"]
+            "args": ["--conf","slave_conf","--port","9005","--cli","2456"]
         },
         {
             "name": "Simulator",

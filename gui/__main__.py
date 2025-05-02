@@ -3,6 +3,7 @@ from pysca import app
 from pysca.device import PYPLC
 from concrete6 import concrete6
 import pygui.navbar as navbar
+from AnyQt.QtCore import QThread,QCoreApplication
 
 def whats_inside(*args):
     try:
@@ -60,9 +61,17 @@ def main():
     
     dev.start(100)
     sec.start(100)
+    io = QThread()
+    dev._timer.moveToThread(io)
+    sec._timer.moveToThread(io)
+    io.finished.connect( dev._timer.stop )
+    io.finished.connect( sec._timer.stop )
+    io.start( )
     app.start( ctx = globals() )
-    dev.stop( )
-    sec.stop( )
+    io.quit( )
+    # dev.stop( )
+    # sec.stop( )
+    io.wait()
     
     concrete6.save( )
 

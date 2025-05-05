@@ -59,13 +59,13 @@ addition_m_7 = Weight(raw = plc.ADDITION_M_7,mmax=10)
 
 # дозатор цемента #1. набор шнеком
 auger_1 = Container(m = lambda: cement_m_1.m, out=plc.AUGER_ON_1, max_sp=1000,lock=Lock(key=~plc.DCEMENT_CLOSED_1))
-dcement_1 = Dosator(m = lambda: cement_m_1.m, out=plc.DCEMENT_OPEN_1, closed=plc.DCEMENT_CLOSED_1, containers=( auger_1,),lock=Lock(key=lambda: plc.AUGER_ON_1 or not plc.MIXER_ISON_1) )
+dcement_1 = Dosator(m = cement_m_1, out=plc.DCEMENT_OPEN_1, closed=plc.DCEMENT_CLOSED_1, containers=( auger_1,),lock=Lock(key=lambda: plc.AUGER_ON_1 or not plc.MIXER_ISON_1) )
 # дозатор цемента #2. набор шнеком
 auger_2 = Container(m = lambda: cement_m_2.m, out=plc.AUGER_ON_2, max_sp=1000,lock=Lock(key=~plc.DCEMENT_CLOSED_2))
-dcement_2 = Dosator(m = lambda: cement_m_2.m, out=plc.DCEMENT_OPEN_2, closed=plc.DCEMENT_CLOSED_2, containers=( auger_2,),lock=Lock(key=lambda: plc.AUGER_ON_2 or not plc.MIXER_ISON_1)  )
+dcement_2 = Dosator(m = cement_m_2, out=plc.DCEMENT_OPEN_2, closed=plc.DCEMENT_CLOSED_2, containers=( auger_2,),lock=Lock(key=lambda: plc.AUGER_ON_2 or not plc.MIXER_ISON_1)  )
 # дозатор цемента #3. набор шнеком
 auger_3 = Container(m = lambda: cement_m_3.m, out=plc.AUGER_ON_3, max_sp=1000,lock=Lock(key=~plc.DCEMENT_CLOSED_3))
-dcement_3 = Dosator(m = lambda: cement_m_3.m, out=plc.DCEMENT_OPEN_3, closed=plc.DCEMENT_CLOSED_3, containers=( auger_3,),lock=Lock(key=lambda: plc.AUGER_ON_3 or not plc.MIXER_ISON_1)  )
+dcement_3 = Dosator(m = cement_m_3, out=plc.DCEMENT_OPEN_3, closed=plc.DCEMENT_CLOSED_3, containers=( auger_3,),lock=Lock(key=lambda: plc.AUGER_ON_3 or not plc.MIXER_ISON_1)  )
 
 aerator_1 = BLINK(enable=plc.AUGER_ON_1,q=plc.AERATOR_ON_1)
 aerator_2 = BLINK(enable=plc.AUGER_ON_2,q=plc.AERATOR_ON_2)
@@ -86,37 +86,37 @@ dwater_1 = Dosator(m = lambda: water_m_1.m, out=plc.DWATER_OPEN_1, closed=plc.DW
 # ХД #1. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_1 = Adapter(outs=(plc.APUMP_ON_1,plc.ADDITION_OPEN_1),sts=(~plc.APUMP_ISON_1,~plc.ADDITION_OPEN_1), turbo=False, best=1)
 addition_1 = Container(m = addition_m_1.get_m, out=apumpvalve_1.out,closed=apumpvalve_1.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_1))
-daddition_1 = Dosator(m = addition_m_1.get_m, out=plc.DADDITION_OPEN_1, closed=plc.DADDITION_CLOSED_1, containers=( addition_1,),lock=Lock(key=lambda: plc.APUMP_ON_1 or plc.ADDITION_OPEN_1 or not plc.MIXER_ISON_1) )
+daddition_1 = Dosator(m = addition_m_1, out=plc.DADDITION_OPEN_1, closed=plc.DADDITION_CLOSED_1, containers=( addition_1,),lock=Lock(key=lambda: plc.APUMP_ON_1 or plc.ADDITION_OPEN_1 or not plc.MIXER_ISON_1) )
 apumpvalve_1.container = addition_1
 # ХД #2. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_2 = Adapter(outs=(plc.APUMP_ON_2,plc.ADDITION_OPEN_2),sts=(~plc.APUMP_ISON_2,~plc.ADDITION_OPEN_2), turbo=False, best=1)
 addition_2 = Container(m = addition_m_2.get_m, out=apumpvalve_2.out,closed=apumpvalve_2.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_2))
-daddition_2 = Dosator(m = addition_m_2.get_m, out=plc.DADDITION_OPEN_2, closed=plc.DADDITION_CLOSED_2, containers=( addition_2,),lock=Lock(key=lambda: plc.APUMP_ON_2 or plc.ADDITION_OPEN_2 or not plc.MIXER_ISON_1)  )
+daddition_2 = Dosator(m = addition_m_2, out=plc.DADDITION_OPEN_2, closed=plc.DADDITION_CLOSED_2, containers=( addition_2,),lock=Lock(key=lambda: plc.APUMP_ON_2 or plc.ADDITION_OPEN_2 or not plc.MIXER_ISON_1)  )
 apumpvalve_2.container = addition_2
 # ХД #3. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_3 = Adapter(outs=(plc.APUMP_ON_3,plc.ADDITION_OPEN_3),sts=(~plc.APUMP_ISON_3,~plc.ADDITION_OPEN_3), turbo=False, best=1)
 addition_3 = Container(m = addition_m_3.get_m, out=apumpvalve_3.out,closed=apumpvalve_3.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_3))
 apumpvalve_3.container = addition_3
-daddition_3 = Dosator(m = addition_m_3.get_m, out=plc.DADDITION_OPEN_3, closed=plc.DADDITION_CLOSED_3, containers=( addition_3,),lock=Lock(key=lambda: plc.APUMP_ON_3 or plc.ADDITION_OPEN_3 or not plc.MIXER_ISON_1)  )
+daddition_3 = Dosator(m = addition_m_3, out=plc.DADDITION_OPEN_3, closed=plc.DADDITION_CLOSED_3, containers=( addition_3,),lock=Lock(key=lambda: plc.APUMP_ON_3 or plc.ADDITION_OPEN_3 or not plc.MIXER_ISON_1)  )
 # ХД #4. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_4 = Adapter(outs=(plc.APUMP_ON_4,plc.ADDITION_OPEN_4),sts=(~plc.APUMP_ISON_4,~plc.ADDITION_OPEN_4), turbo=False, best=1)
 addition_4 = Container(m = addition_m_4.get_m, out=apumpvalve_4.out, closed=apumpvalve_4.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_4))
-daddition_4 = Dosator(m = addition_m_4.get_m, out=plc.DADDITION_OPEN_4, closed=plc.DADDITION_CLOSED_4, containers=( addition_4,),lock=Lock(key=lambda: plc.APUMP_ON_4 or plc.ADDITION_OPEN_4 or not plc.MIXER_ISON_1)  )
+daddition_4 = Dosator(m = addition_m_4, out=plc.DADDITION_OPEN_4, closed=plc.DADDITION_CLOSED_4, containers=( addition_4,),lock=Lock(key=lambda: plc.APUMP_ON_4 or plc.ADDITION_OPEN_4 or not plc.MIXER_ISON_1)  )
 apumpvalve_4.container = addition_4
 # ХД #5. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_5 = Adapter(outs=(plc.APUMP_ON_5,plc.ADDITION_OPEN_5),sts=(~plc.APUMP_ISON_5,~plc.ADDITION_OPEN_5), turbo=False, best=1)
 addition_5 = Container(m = addition_m_5.get_m, out=apumpvalve_5.out,closed=apumpvalve_5.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_5))
-daddition_5 = Dosator(m = addition_m_5.get_m, out=plc.DADDITION_OPEN_5, closed=plc.DADDITION_CLOSED_5, containers=( addition_5,),lock=Lock(key=lambda: plc.APUMP_ON_5 or plc.ADDITION_OPEN_5 or not plc.MIXER_ISON_1)  )
+daddition_5 = Dosator(m = addition_m_5, out=plc.DADDITION_OPEN_5, closed=plc.DADDITION_CLOSED_5, containers=( addition_5,),lock=Lock(key=lambda: plc.APUMP_ON_5 or plc.ADDITION_OPEN_5 or not plc.MIXER_ISON_1)  )
 apumpvalve_5.container = addition_5
 # ХД #6. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_6 = Adapter(outs=(plc.APUMP_ON_6,plc.ADDITION_OPEN_6),sts=(~plc.APUMP_ISON_6,~plc.ADDITION_OPEN_6), turbo=False, best=1)
 addition_6 = Container(m = addition_m_6.get_m, out=apumpvalve_6.out,closed=apumpvalve_6.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_6))
-daddition_6 = Dosator(m = addition_m_6.get_m, out=plc.DADDITION_OPEN_6, closed=plc.DADDITION_CLOSED_6, containers=( addition_6,),lock=Lock(key=lambda: plc.APUMP_ON_6 or plc.ADDITION_OPEN_6 or not plc.MIXER_ISON_1)  )
+daddition_6 = Dosator(m = addition_m_6, out=plc.DADDITION_OPEN_6, closed=plc.DADDITION_CLOSED_6, containers=( addition_6,),lock=Lock(key=lambda: plc.APUMP_ON_6 or plc.ADDITION_OPEN_6 or not plc.MIXER_ISON_1)  )
 apumpvalve_6.container = addition_6
 # ХД #7. набор насосом через переливную емкость и затвором из переливной в точном режиме
 apumpvalve_7 = Adapter(outs=(plc.APUMP_ON_7,plc.ADDITION_OPEN_7),sts=(~plc.APUMP_ISON_7,~plc.ADDITION_OPEN_7), turbo=False, best=1)
 addition_7 = Container(m = addition_m_7.get_m, out=apumpvalve_7.out,closed=apumpvalve_7.closed, max_sp=10,lock=Lock(key=~plc.DADDITION_CLOSED_7))
-daddition_7 = Dosator(m = addition_m_7.get_m, out=plc.DADDITION_OPEN_7, closed=plc.DADDITION_CLOSED_7, containers=( addition_7,),lock=Lock(key=lambda: plc.APUMP_ON_7 or plc.ADDITION_OPEN_7 or not plc.MIXER_ISON_1)  )
+daddition_7 = Dosator(m = addition_m_7, out=plc.DADDITION_OPEN_7, closed=plc.DADDITION_CLOSED_7, containers=( addition_7,),lock=Lock(key=lambda: plc.APUMP_ON_7 or plc.ADDITION_OPEN_7 or not plc.MIXER_ISON_1)  )
 apumpvalve_7.container = addition_7
 """
 # дозаторы ХД №8-10. набор по расходомеру, выгрузка по датчику уровня
@@ -220,23 +220,66 @@ mixer_1 = Mixer(gate=gate_1, motor=motor_1, use_ack=False, flows=tuple(x.q for x
                 water_1, 
                 addition_1, addition_2, addition_3, addition_4, addition_5, addition_6, addition_7,daddition_8.expenses[0],daddition_9.expenses[0],daddition_10.expenses[0]]) )
 
-ready_1 = Readiness(rails=(dcement_1, dcement_2,dcement_3,dwater_1,daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,daddition_8,daddition_9,daddition_10,mcontainer_1) )
-loaded_1 = Loaded( rails=(dcement_1, dcement_2,dcement_3,dwater_1,daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,daddition_8,daddition_9,daddition_10,mcontainer_1) )
-manager_1 = Manager(collected=ready_1,loaded=loaded_1, mixer=mixer_1, dosators=(dcement_1,dcement_2,dcement_3,dwater_1,daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,daddition_8,daddition_9,daddition_10,mcontainer_1) )
+from extension import GroupDosator
+# dcements = GroupDosator(dosators=(dcement_1,dcement_2,dcement_3))
+dadditions = GroupDosator(dosators=(daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7))
 
-factory_1.on_emergency = tuple( x.emergency for x in (dcement_1, dcement_2, dcement_3, dwater_1, daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,daddition_8,daddition_9,daddition_10, mixer_1,manager_1,water_1,mcontainer_1,slave) )
-factory_1.on_mode = tuple( x.switch_mode for x in (dcement_1, dcement_2, dcement_3, dwater_1, daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,daddition_8,daddition_9,daddition_10,mcontainer_1,slave) )
+ready_1 = Readiness(rails=( 
+                          dcement_1, dcement_2,dcement_3,
+                          dwater_1,
+                          dadditions, # daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                          daddition_8,daddition_9,daddition_10,
+                          mcontainer_1,
+                          ) 
+                    )
+loaded_1 = Loaded( rails=(
+                          dcement_1, dcement_2,dcement_3,
+                          dwater_1,
+                          dadditions, #daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                          daddition_8,daddition_9,daddition_10,
+                          mcontainer_1,
+                          ) 
+                  )
+manager_1 = Manager(collected=ready_1,loaded=loaded_1, mixer=mixer_1, dosators=(
+                      dcement_1,dcement_2,dcement_3,
+                      dwater_1,
+                      dadditions,# daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                      daddition_8,daddition_9,daddition_10,
+                      mcontainer_1
+                      ) 
+                    )
+
+factory_1.on_emergency = tuple( x.emergency for x in (
+                      dcement_1, dcement_2, dcement_3, 
+                      dwater_1, 
+                      daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                      daddition_8,daddition_9,daddition_10, 
+                      mixer_1,manager_1,water_1,mcontainer_1,slave
+                    ) )
+factory_1.on_mode = tuple( x.switch_mode for x in (
+                      dcement_1, dcement_2, dcement_3, 
+                      dwater_1, 
+                      daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                      daddition_8,daddition_9,daddition_10,
+                      mcontainer_1,slave
+                    ) )
 
 def qreset():
   slave.main.qreset = mixer_1.qreset
-  
-additions = ( addition_m_1,addition_m_2,addition_m_3,addition_m_4,addition_m_5,addition_m_6,addition_m_7,None,None,None,
-              daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,daddition_8,daddition_9,daddition_10,
-              addition_1, addition_2,addition_3,addition_4,addition_5,addition_6,addition_7,addition_8,addition_9,addition_10,
-              apumpvalve_1,apumpvalve_2,apumpvalve_3,apumpvalve_4,apumpvalve_5,apumpvalve_6,apumpvalve_7,None,None,None, 
+    
+additions = ( 
+              # addition_m_1,addition_m_2,addition_m_3,addition_m_4,addition_m_5,addition_m_6,addition_m_7,None,None,None,
+              # daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+              # addition_1, addition_2,addition_3,addition_4,addition_5,addition_6,addition_7,
+              dadditions,
+              daddition_8,daddition_9,daddition_10,
+              addition_8,addition_9,addition_10,
+              apumpvalve_1,apumpvalve_2,apumpvalve_3,apumpvalve_4,apumpvalve_5,apumpvalve_6,apumpvalve_7,
+              None,None,None, 
             )
 
-cements = ( cement_m_1,cement_m_2,cement_m_3, 
+cements = ( 
+            cement_m_1,cement_m_2,cement_m_3, 
             dcement_1,dcement_2,dcement_3,
             auger_1,auger_2,auger_3,
           )
@@ -257,16 +300,8 @@ from time import time_ns
 def profiler():
   global stat
   t1 = time_ns()
-  index=0
-  p0 = t1
-  parts = []
   for f in additions:
-    if f: f( )
-    index+=1
-    if index % 10 == 0:
-      parts.append( time_ns()-p0 )
-      p0=time_ns()
-    
+    if f: f( )    
   t2 = time_ns()
   for f in cements:
     if f: f( )
@@ -274,7 +309,7 @@ def profiler():
   for f in other:
     if f: f( )
   t4 = time_ns( )
-  stat = ((t2-t1)/(t4-t1)*100,(t3-t2)/(t4-t1)*100,(t4-t3)/(t4-t1)*100)+tuple( x/(t2-t1)*100 for x in parts )
+  stat = ((t2-t1)/(t4-t1)*100,(t3-t2)/(t4-t1)*100,(t4-t3)/(t4-t1)*100)
   
 def term():
   raise KeyboardInterrupt

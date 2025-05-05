@@ -298,6 +298,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <string>open</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_5">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>dosator_9</zorder>
    <zorder>container_15</zorder>
    <zorder>animation_11</zorder>
@@ -305,6 +331,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>container_16</zorder>
    <zorder>open_17</zorder>
    <zorder>cpanel_5</zorder>
+   <zorder>ack_5</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_9" native="true">
    <property name="geometry">
@@ -488,6 +515,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <string>open</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_6">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>dosator_10</zorder>
    <zorder>container_17</zorder>
    <zorder>animation_12</zorder>
@@ -495,6 +548,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>container_18</zorder>
    <zorder>open_19</zorder>
    <zorder>cpanel_6</zorder>
+   <zorder>ack_6</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_1" native="true">
    <property name="geometry">
@@ -678,6 +732,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <number>3</number>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_1">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>open_7</zorder>
    <zorder>container_6</zorder>
    <zorder>dosator_5</zorder>
@@ -685,6 +765,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>animation_6</zorder>
    <zorder>dpanel_5</zorder>
    <zorder>cpanel_1</zorder>
+   <zorder>ack_1</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_4" native="true">
    <property name="geometry">
@@ -868,6 +949,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <string>open</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_2">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>container_9</zorder>
    <zorder>dosator_6</zorder>
    <zorder>animation_7</zorder>
@@ -875,6 +982,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>container_8</zorder>
    <zorder>open_9</zorder>
    <zorder>cpanel_2</zorder>
+   <zorder>ack_2</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_11" native="true">
    <property name="geometry">
@@ -1222,6 +1330,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <string>open</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_3">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>dosator_7</zorder>
    <zorder>container_11</zorder>
    <zorder>animation_9</zorder>
@@ -1229,6 +1363,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>container_12</zorder>
    <zorder>open_13</zorder>
    <zorder>cpanel_3</zorder>
+   <zorder>ack_3</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_12" native="true">
    <property name="geometry">
@@ -1576,6 +1711,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <string>open</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_4">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>dosator_8</zorder>
    <zorder>container_13</zorder>
    <zorder>animation_10</zorder>
@@ -1583,6 +1744,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>container_14</zorder>
    <zorder>open_15</zorder>
    <zorder>cpanel_4</zorder>
+   <zorder>ack_4</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_10" native="true">
    <property name="geometry">
@@ -1766,6 +1928,32 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
      <string>open</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ack_7">
+    <property name="geometry">
+     <rect>
+      <x>57</x>
+      <y>320</y>
+      <width>54</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/concrete.qrc">
+      <normaloff>:/concrete/attention.png</normaloff>:/concrete/attention.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>48</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>dosator_11</zorder>
    <zorder>container_19</zorder>
    <zorder>animation_13</zorder>
@@ -1773,6 +1961,7 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <zorder>container_20</zorder>
    <zorder>open_21</zorder>
    <zorder>cpanel_7</zorder>
+   <zorder>ack_7</zorder>
   </widget>
   <widget class="QWidget" name="dgroup_5" native="true">
    <property name="geometry">

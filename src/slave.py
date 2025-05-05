@@ -5,7 +5,7 @@ from project import name as project_name
 from concrete import Container,Dosator,Weight
 from concrete.counting import Expense,MoveFlow
 from concrete.vibrator import Vibrator,UnloadHelper
-from extension import Accelerator
+from extension import Retarder as Accelerator
 from pyplc.pou import POU
 from pyplc.utils.trig import TRIG
 from pyplc.utils.latch import RS
@@ -126,12 +126,12 @@ dfiller_4 = Dosator( m = lambda: filler_m_4.m, out=plc.DFILLER_OPEN_4,closed=plc
 dfiller_5 = Dosator( m = lambda: filler_m_5.m, out=plc.DFILLER_OPEN_5,closed=plc.DFILLER_CLOSED_5,containers=(filler_5,),lock=Lock(key=lambda: not slave.tconveyor_ison))
 dfiller_6 = Dosator( m = lambda: filler_m_6.m, out=plc.DFILLER_OPEN_6,closed=plc.DFILLER_CLOSED_6,containers=(filler_6,),lock=Lock(key=lambda: not slave.tconveyor_ison))
 
-vibrator_1 = Vibrator( q = plc.VIBRATOR_ON_1, containers = (plc.FILLER_OPEN_1,plc.FILLER_OPEN_2))
-vibrator_2 = Vibrator( q = plc.VIBRATOR_ON_2, containers = (plc.FILLER_OPEN_3,plc.FILLER_OPEN_4))
-vibrator_3 = Vibrator( q = plc.VIBRATOR_ON_3, containers = (plc.FILLER_OPEN_5,plc.FILLER_OPEN_6))
-vibrator_4 = Vibrator( q = plc.VIBRATOR_ON_4, containers = (plc.FILLER_OPEN_7,plc.FILLER_OPEN_8))
-vibrator_5 = Vibrator( q = plc.VIBRATOR_ON_5, containers = (plc.FILLER_OPEN_9,plc.FILLER_OPEN_10))
-vibrator_6 = Vibrator( q = plc.VIBRATOR_ON_6, containers = (plc.FILLER_OPEN_11,plc.FILLER_OPEN_12))
+vibrator_1 = Vibrator( q = plc.VIBRATOR_ON_1, containers = (plc.FILLER_OPEN_1,plc.FILLER_OPEN_2),weight=filler_m_1)
+vibrator_2 = Vibrator( q = plc.VIBRATOR_ON_2, containers = (plc.FILLER_OPEN_3,plc.FILLER_OPEN_4),weight=filler_m_2)
+vibrator_3 = Vibrator( q = plc.VIBRATOR_ON_3, containers = (plc.FILLER_OPEN_5,plc.FILLER_OPEN_6),weight=filler_m_3)
+vibrator_4 = Vibrator( q = plc.VIBRATOR_ON_4, containers = (plc.FILLER_OPEN_7,plc.FILLER_OPEN_8),weight=filler_m_4)
+vibrator_5 = Vibrator( q = plc.VIBRATOR_ON_5, containers = (plc.FILLER_OPEN_9,plc.FILLER_OPEN_10),weight=filler_m_5)
+vibrator_6 = Vibrator( q = plc.VIBRATOR_ON_6, containers = (plc.FILLER_OPEN_11,plc.FILLER_OPEN_12),weight=filler_m_6)
 
 df_vibrator_1 = UnloadHelper( q=plc.DF_VIBRATOR_ON_1, dosator=dfiller_1, weight=filler_m_1 )
 df_vibrator_2 = UnloadHelper( q=plc.DF_VIBRATOR_ON_2, dosator=dfiller_2, weight=filler_m_2 )

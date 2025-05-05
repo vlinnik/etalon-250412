@@ -22,5 +22,12 @@
         1
     ],
     "node_id": 1,
-    "init": { "rate":6 }
+    "init": {
+        "hostname": "master",
+        "flags": 0,
+        "iface": 0,
+        "channel": 2,
+        "rate": 6
+    },
+    "scanTime": 150
 }

@@ -1,8 +1,11 @@
 from pyplc.sfc import SFC,POU
 from concrete.container import Container
+from concrete.dosator import Dosator
+from concrete.manager import Readiness,Loaded
+from pyplc.utils.latch import RS
 
 class Accelerator(SFC):
-    dm = POU.var(5.0,persistent=True) #сколько дозировать в точном режиме
+    dm = POU.var(1.5,persistent=True) #сколько дозировать в точном режиме
     def __init__(self, outs: tuple[callable], sts: tuple[callable] = (),turbo = True, best:int = None , id: str=None, parent: POU = None):
         """Создать ускоритель набора из группы затворов.
         
@@ -78,4 +81,117 @@ class Accelerator(SFC):
         else:
             self.outs[0](self._out)
 
+class Retarder(Accelerator):
+    maxT = POU.var(int(3000),persistent=True)
+    
+    def __init__(self, outs, sts = (), turbo=True, best = None, id = None, parent = None):
+        super().__init__(outs, sts, turbo, best, id, parent)
+        self._current = best if best is not None else 0
+        self.dm = 100
+        
+    def main(self):
+        if self.container:
+            yield from self.until(lambda: self.container.busy,step='ready')
+            self._current=self.best if self.best is not None else self._current
+            while self._out:
+                till = self.m + self.dm
+                yield from self.till( lambda: self.m<till and self._out,max=self.maxT,n=[self.outs[self._current]])
+                self._current=(self._current+1) % len(self.outs)
+            yield from self.until(lambda: self._closed,step='wait.closed')
+        else:
+            self.outs[0](self._out)
+        
+
+class GroupDosator(SFC):
+    forced = POU.var(int(-1))   #этот дозатор обрабатывается безусловно
+    def __init__(self, dosators:tuple[Dosator] = (), id = None, parent = None):
+        super().__init__(id, parent)
+        self.count = 1
+        self.go = False
+        self.ready = False
+        self.loaded = False
+        self.unload = False
+        self.unloaded= False
+        self.dosators = dosators
+        self._used = ( )
+        self._loaded:Readiness = None
+        self._unloaded:Loaded = None
+        self.s_unload = RS(set=lambda: self.unload)
+        self.subtasks = (self._always,self.s_unload )
+        
+    def switch_mode(self,manual: bool):
+        pass
             
+    def emergency(self,emergency: bool):
+        if emergency:
+            self._loaded = None
+            self._unloaded = None
+            self._used = ( )
+            
+        self.unload = False
+        self.s_unload.unset( )                
+
+        for d in self.dosators:
+            d.emergency(emergency)
+            d()
+        self.sfc_reset = emergency
+    
+    def _always(self):
+        all_ready = True
+        all_nready = False
+        for d in self._used:
+            d.go = self.go
+            d.unload = self.s_unload.q
+            d( )
+            all_ready = all_ready and d.ready
+            all_nready = all_nready or d.ready
+            for c in d.containers:
+                c( )
+        if self.forced>=0 and self.forced<len(self.dosators):
+            self.dosators[self.forced]( )
+        
+        if self.go:
+            self.ready = all_nready
+        else:
+            self.ready = all_ready
+                
+        if self._loaded:
+            self.loaded = self._loaded( )
+        else:
+            self.loaded = False
+        if self._unloaded:
+            self.unloaded = self._unloaded( )
+
+    def cycle(self,batch:int ):
+        self.log(f'запускаем необходимые дозаторы')
+        yield from self.until( lambda: self.loaded ,step='wait.loaded')
+        self.log(f'необходимые дозаторы загружены')
+        yield from self.till(lambda: self.s_unload.q, step = 'wait.unload')
+        yield from self.until( lambda: self.unloaded, step='wait.unloaded')
+        yield from self.till( lambda: self.unloaded,step = 'wait.clear.unloaded' )
+        self.unload = False
+        self.s_unload.unset( )
+        self.log(f'замес выгружен в смеситель')
+            
+    def main(self):
+        self.log('готов')
+        
+        self.ready = True
+        yield from self.until(lambda: self.go,step='ready')
+        self._used = tuple(d for d in filter(lambda d: sum( (c.sp for c in d.containers) )>0 , self.dosators )) 
+        self._loaded = Readiness( self._used )
+        self._unloaded = Loaded( self._used )
+        self.ready = False
+        yield from self.till(lambda: self.go, step='steady')
+        batch = 0        
+        count = self.count
+        self.log(f'запуск, {count} циклов')
+        while batch<count:   
+            yield from self.cycle(batch)
+
+            batch = batch+1 
+            count = self.count 
+        
+        self._loaded = None
+        self._unloaded = None
+        self._used = ( )

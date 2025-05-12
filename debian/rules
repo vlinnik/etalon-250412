@@ -1,0 +1,6 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=etalon-250412
+
+%:
+	dh $@ --buildsystem=pybuild

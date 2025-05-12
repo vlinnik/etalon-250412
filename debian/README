@@ -1,0 +1,24 @@
+The Debian Package etalon-250412
+----------------------------
+
+This package provides the PYSCA-HMI for Etalon-250412 software project, a tool designed for []. 
+
+Installation:
+--------------
+To install this package, use the following command:
+    sudo dpkg -i python3-etalon-250412_<version>.deb
+
+Usage:
+------
+After installation, you can run the software by executing:
+    pysca-hmi
+
+Support:
+--------
+If you encounter any issues or have questions, please contact the maintainer at vlinnik@mail.ru.
+
+License:
+--------
+This software is distributed under the gplv3 license. See the LICENSE file for more details.
+
+ -- vlinnik <vlinnik@mail.ru>  Mon, 12 May 2025 15:28:20 +0300

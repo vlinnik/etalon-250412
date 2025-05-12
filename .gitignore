@@ -15,3 +15,5 @@ persist.json
 src.dat
 master.dat
 slave_conf.dat
+.debhelper
+

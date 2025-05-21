@@ -97,6 +97,7 @@ class Retarder(Accelerator):
                 till = self.m + self.dm
                 yield from self.till( lambda: self.m<till and self._out,max=self.maxT,n=[self.outs[self._current]])
                 self._current=(self._current+1) % len(self.outs)
+                yield
             yield from self.until(lambda: self._closed,step='wait.closed')
         else:
             self.outs[0](self._out)

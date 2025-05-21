@@ -220,15 +220,15 @@ mixer_1 = Mixer(gate=gate_1, motor=motor_1, use_ack=False, flows=tuple(x.q for x
                 water_1, 
                 addition_1, addition_2, addition_3, addition_4, addition_5, addition_6, addition_7,daddition_8.expenses[0],daddition_9.expenses[0],daddition_10.expenses[0]]) )
 
-from extension import GroupDosator
+# from extension import GroupDosator
 # dcements = GroupDosator(dosators=(dcement_1,dcement_2,dcement_3))
-dadditions = GroupDosator(dosators=(daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7))
+# dadditions = GroupDosator(dosators=(daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7))
 
 ready_1 = Readiness(rails=( 
                           dcement_1, dcement_2,dcement_3,
                           dwater_1,
-                          dadditions,
-                          #daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                          # dadditions,
+                          daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
                           daddition_8,daddition_9,daddition_10,
                           mcontainer_1,
                           ) 
@@ -236,8 +236,8 @@ ready_1 = Readiness(rails=(
 loaded_1 = Loaded( rails=(
                           dcement_1, dcement_2,dcement_3,
                           dwater_1,
-                          dadditions,
-                          #daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                          # dadditions,
+                          daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
                           daddition_8,daddition_9,daddition_10,
                           mcontainer_1,
                           ) 
@@ -245,8 +245,8 @@ loaded_1 = Loaded( rails=(
 manager_1 = Manager(collected=ready_1,loaded=loaded_1, mixer=mixer_1, dosators=(
                       dcement_1,dcement_2,dcement_3,
                       dwater_1,
-                      dadditions,
-                      #daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+                      # dadditions,
+                      daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
                       daddition_8,daddition_9,daddition_10,
                       mcontainer_1
                       ) 
@@ -271,10 +271,10 @@ def qreset():
   slave.main.qreset = mixer_1.qreset
     
 additions = ( 
-              dadditions,
-              # addition_m_1,addition_m_2,addition_m_3,addition_m_4,addition_m_5,addition_m_6,addition_m_7,
-              # daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
-              # addition_1, addition_2,addition_3,addition_4,addition_5,addition_6,addition_7,
+              # dadditions,
+              addition_m_1,addition_m_2,addition_m_3,addition_m_4,addition_m_5,addition_m_6,addition_m_7,
+              daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
+              addition_1, addition_2,addition_3,addition_4,addition_5,addition_6,addition_7,
               daddition_8,daddition_9,daddition_10,
               addition_8,addition_9,addition_10,
               apumpvalve_1,apumpvalve_2,apumpvalve_3,apumpvalve_4,apumpvalve_5,apumpvalve_6,apumpvalve_7

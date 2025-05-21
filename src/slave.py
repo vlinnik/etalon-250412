@@ -103,12 +103,12 @@ twogate_4 = Accelerator(outs=(plc.FILLER_OPEN_7,plc.FILLER_OPEN_8),sts=(plc.FILL
 twogate_5 = Accelerator(outs=(plc.FILLER_OPEN_9,plc.FILLER_OPEN_10),sts=(plc.FILLER_CLOSED_9,plc.FILLER_CLOSED_10))
 twogate_6 = Accelerator(outs=(plc.FILLER_OPEN_11,plc.FILLER_OPEN_12),sts=(plc.FILLER_CLOSED_11,plc.FILLER_CLOSED_12))
 
-filler_1 = Container(m = filler_m_1.get_m,out=twogate_1.out,closed=twogate_1.closed,max_sp=4000)
-filler_2 = Container(m = filler_m_2.get_m,out=twogate_2.out,closed=twogate_2.closed,max_sp=4000)
-filler_3 = Container(m = filler_m_3.get_m,out=twogate_3.out,closed=twogate_3.closed,max_sp=4000)
-filler_4 = Container(m = filler_m_4.get_m,out=twogate_4.out,closed=twogate_4.closed,max_sp=4000)
-filler_5 = Container(m = filler_m_5.get_m,out=twogate_5.out,closed=twogate_5.closed,max_sp=4000)
-filler_6 = Container(m = filler_m_6.get_m,out=twogate_6.out,closed=twogate_6.closed,max_sp=4000)
+filler_1 = Container(m = filler_m_1.get_m,out=twogate_1.out,closed=twogate_1.closed,lock=Lock(key=~plc.DFILLER_CLOSED_1,rst=(plc.FILLER_OPEN_1,plc.FILLER_OPEN_2)),max_sp=4000)
+filler_2 = Container(m = filler_m_2.get_m,out=twogate_2.out,closed=twogate_2.closed,lock=Lock(key=~plc.DFILLER_CLOSED_2,rst=(plc.FILLER_OPEN_3,plc.FILLER_OPEN_4)),max_sp=4000)
+filler_3 = Container(m = filler_m_3.get_m,out=twogate_3.out,closed=twogate_3.closed,lock=Lock(key=~plc.DFILLER_CLOSED_3,rst=(plc.FILLER_OPEN_5,plc.FILLER_OPEN_6)),max_sp=4000)
+filler_4 = Container(m = filler_m_4.get_m,out=twogate_4.out,closed=twogate_4.closed,lock=Lock(key=~plc.DFILLER_CLOSED_4,rst=(plc.FILLER_OPEN_7,plc.FILLER_OPEN_8)),max_sp=4000)
+filler_5 = Container(m = filler_m_5.get_m,out=twogate_5.out,closed=twogate_5.closed,lock=Lock(key=~plc.DFILLER_CLOSED_5,rst=(plc.FILLER_OPEN_9,plc.FILLER_OPEN_10)),max_sp=4000)
+filler_6 = Container(m = filler_m_6.get_m,out=twogate_6.out,closed=twogate_6.closed,lock=Lock(key=~plc.DFILLER_CLOSED_6,rst=(plc.FILLER_OPEN_11,plc.FILLER_OPEN_12)),max_sp=4000)
 
 twogate_1.container = filler_1
 twogate_2.container = filler_2
@@ -119,12 +119,12 @@ twogate_6.container = filler_6
 
 slave = Slave( containers=(filler_1,filler_2,filler_3,filler_4,filler_5,filler_6) )
 
-dfiller_1 = Dosator( m = lambda: filler_m_1.m, out=plc.DFILLER_OPEN_1,closed=plc.DFILLER_CLOSED_1,containers=(filler_1,),lock=Lock(key=lambda: not slave.tconveyor_ison))
-dfiller_2 = Dosator( m = lambda: filler_m_2.m, out=plc.DFILLER_OPEN_2,closed=plc.DFILLER_CLOSED_2,containers=(filler_2,),lock=Lock(key=lambda: not slave.tconveyor_ison))
-dfiller_3 = Dosator( m = lambda: filler_m_3.m, out=plc.DFILLER_OPEN_3,closed=plc.DFILLER_CLOSED_3,containers=(filler_3,),lock=Lock(key=lambda: not slave.tconveyor_ison))
-dfiller_4 = Dosator( m = lambda: filler_m_4.m, out=plc.DFILLER_OPEN_4,closed=plc.DFILLER_CLOSED_4,containers=(filler_4,),lock=Lock(key=lambda: not slave.tconveyor_ison))
-dfiller_5 = Dosator( m = lambda: filler_m_5.m, out=plc.DFILLER_OPEN_5,closed=plc.DFILLER_CLOSED_5,containers=(filler_5,),lock=Lock(key=lambda: not slave.tconveyor_ison))
-dfiller_6 = Dosator( m = lambda: filler_m_6.m, out=plc.DFILLER_OPEN_6,closed=plc.DFILLER_CLOSED_6,containers=(filler_6,),lock=Lock(key=lambda: not slave.tconveyor_ison))
+dfiller_1 = Dosator( m = filler_m_1.get_m, out=plc.DFILLER_OPEN_1,closed=plc.DFILLER_CLOSED_1,containers=(filler_1,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_1.closed(),rst=(plc.DFILLER_OPEN_1,)))
+dfiller_2 = Dosator( m = filler_m_2.get_m, out=plc.DFILLER_OPEN_2,closed=plc.DFILLER_CLOSED_2,containers=(filler_2,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_2.closed(),rst=(plc.DFILLER_OPEN_2,)))
+dfiller_3 = Dosator( m = filler_m_3.get_m, out=plc.DFILLER_OPEN_3,closed=plc.DFILLER_CLOSED_3,containers=(filler_3,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_3.closed(),rst=(plc.DFILLER_OPEN_3,)))
+dfiller_4 = Dosator( m = filler_m_4.get_m, out=plc.DFILLER_OPEN_4,closed=plc.DFILLER_CLOSED_4,containers=(filler_4,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_4.closed(),rst=(plc.DFILLER_OPEN_4,)))
+dfiller_5 = Dosator( m = filler_m_5.get_m, out=plc.DFILLER_OPEN_5,closed=plc.DFILLER_CLOSED_5,containers=(filler_5,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_5.closed(),rst=(plc.DFILLER_OPEN_5,)))
+dfiller_6 = Dosator( m = filler_m_6.get_m, out=plc.DFILLER_OPEN_6,closed=plc.DFILLER_CLOSED_6,containers=(filler_6,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_6.closed(),rst=(plc.DFILLER_OPEN_6,)))
 
 vibrator_1 = Vibrator( q = plc.VIBRATOR_ON_1, containers = (plc.FILLER_OPEN_1,plc.FILLER_OPEN_2),weight=filler_m_1)
 vibrator_2 = Vibrator( q = plc.VIBRATOR_ON_2, containers = (plc.FILLER_OPEN_3,plc.FILLER_OPEN_4),weight=filler_m_2)

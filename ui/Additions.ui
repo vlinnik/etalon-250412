@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resources/concrete.qrc">
-    <normaloff>:/concrete/home.png</normaloff>:/concrete/home.png</iconset>
+    <normaloff>:/concrete/additions.png</normaloff>:/concrete/additions.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">#centralwidget,#Additions
@@ -2131,9 +2131,9 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
    <property name="geometry">
     <rect>
      <x>14</x>
-     <y>373</y>
-     <width>1458</width>
-     <height>475</height>
+     <y>459</y>
+     <width>520</width>
+     <height>391</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -2157,8 +2157,8 @@ padding: 10px;</string>
   <widget class="QLabel" name="mixer_i_1">
    <property name="geometry">
     <rect>
-     <x>63</x>
-     <y>385</y>
+     <x>79</x>
+     <y>487</y>
      <width>87</width>
      <height>42</height>
     </rect>
@@ -2171,6 +2171,25 @@ padding: 10px;</string>
    </property>
    <property name="style" stdset="0">
     <string>huge</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>446</y>
+     <width>453</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>График тока двигателя смесителя</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+   <property name="style" stdset="0">
+    <string>sys</string>
    </property>
   </widget>
  </widget>

@@ -37,6 +37,6 @@ include = ["gui"]
 
 [tool.setuptools.data-files]
 "share/applications" = ["pysca-hmi.desktop"]
-"share/pysca-hmi" = [ "default.scada", "*.rcc","*.dat"]
+"share/pysca-hmi" = [ "default.scada", "*.rcc","*.dat","SCADA.ini"]
 "share/pysca-hmi/ui" = ["ui/*.ui"]
 #"lib/SCADA/modules" = ["/usr/lib/x86_64-linux-gnu/qt5/plugins/SCADA/modules/libconcrete6.so"]

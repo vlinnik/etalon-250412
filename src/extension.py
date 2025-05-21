@@ -111,6 +111,7 @@ class GroupDosator(SFC):
         self.ready = False
         self.loaded = False
         self.unload = False
+        self._unload= False
         self.unloaded= False
         self.dosators = dosators
         self._used = ( )
@@ -151,26 +152,32 @@ class GroupDosator(SFC):
             self.dosators[self.forced]( )
         
         if self.go:
-            self.ready = all_nready
+            self.ready = all_nready 
         else:
-            self.ready = all_ready
+            self.ready = all_ready 
                 
-        if self._loaded:
+        if self._loaded is not None:
             self.loaded = self._loaded( )
         else:
-            self.loaded = False
+            self.loaded = self.go
         if self._unloaded:
             self.unloaded = self._unloaded( )
+        else:
+            self.unloaded = self.unload and not self._unload
+            self._unload = self.unload
 
     def cycle(self,batch:int ):
         self.log(f'запускаем необходимые дозаторы')
         yield from self.until( lambda: self.loaded ,step='wait.loaded')
         self.log(f'необходимые дозаторы загружены')
-        yield from self.till(lambda: self.s_unload.q, step = 'wait.unload')
-        yield from self.until( lambda: self.unloaded, step='wait.unloaded')
-        yield from self.till( lambda: self.unloaded,step = 'wait.clear.unloaded' )
+        yield from self.until(lambda: self.s_unload.q, step = 'wait.unload')
+        self.s_unload.unset()
+        self._unload = False
         self.unload = False
-        self.s_unload.unset( )
+        self.log(f'выгрузка группового дозатора')
+        yield from self.until( lambda: self.unloaded, step='wait.unloaded')
+        self.log(f'завершение выгрузки группового дозатора')
+        yield from self.till( lambda: self.unloaded,step = 'wait.clear.unloaded' )
         self.log(f'замес выгружен в смеситель')
             
     def main(self):
@@ -179,9 +186,11 @@ class GroupDosator(SFC):
         self.ready = True
         yield from self.until(lambda: self.go,step='ready')
         self._used = tuple(d for d in filter(lambda d: sum( (c.sp for c in d.containers) )>0 , self.dosators )) 
-        self._loaded = Readiness( self._used )
-        self._unloaded = Loaded( self._used )
-        self.ready = False
+        if len(self._used)>0:
+            self._loaded = Readiness( self._used )
+            self._unloaded = Loaded( self._used )
+        self._unload = False
+        # self.ready = False
         yield from self.till(lambda: self.go, step='steady')
         batch = 0        
         count = self.count

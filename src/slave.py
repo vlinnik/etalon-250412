@@ -74,11 +74,11 @@ class Slave(POU):
                 self.f_unloaded.clear( )
             
             self.busy = all( (not d.ready for d in self.dosators) )
-            self.unloading = self.t_unloading( )
             for d in self.dosators:
                 d.count = self.count
-                d.unload = self.unload
+                d.unload = self.unload and not self.unloading
                 d.go = self.go
+            self.unloading = self.t_unloading( )
                         
             index = 14
             weight = 0.0

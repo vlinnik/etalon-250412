@@ -2,7 +2,7 @@ import sys
 from pysca import app
 from pysca.device import PYPLC
 from concrete6 import concrete6
-import pygui.navbar as navbar
+import pygui.multihead as navbar
 from AnyQt.QtCore import QThread,QCoreApplication
 
 def whats_inside(*args):
@@ -47,8 +47,8 @@ def main():
     Additions = app.window('ui/Additions.ui')
     app.object(concrete6.instance)
     # с использованием navbar
-    navbar.append(Home)
     navbar.append(Additions)
+    navbar.append(Home)
     navbar.tools(app.window('ui/Extensions.ui'))
     concrete6.setContainerPanels((Home.cpanel_1, Home.cpanel_2, Home.cpanel_3, Home.cpanel_4, Additions.cpanel_1, Additions.cpanel_2, Additions.cpanel_3, Additions.cpanel_4, Additions.cpanel_5,
                                  Additions.cpanel_6, Additions.cpanel_7, Additions.cpanel_8, Additions.cpanel_9, Additions.cpanel_10, Home.cpanel_5, Home.cpanel_6, Home.cpanel_7, Home.cpanel_8, Home.cpanel_9, Home.cpanel_10))

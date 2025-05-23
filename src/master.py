@@ -11,7 +11,7 @@ from project import name as project_name
 from pyplc.utils.subscriber import Subscriber
 from pyplc.utils.latch import RS
 from pyplc.utils.trig import FTRIG
-from pyplc.utils.misc import BLINK
+from pyplc.utils.misc import BLINK,TOF
 from concrete.vibrator import UnloadHelper
 
 print(f'\tЗапуск проекта {project_name}, управление цементом/водой/ХД/смесителем')
@@ -37,12 +37,14 @@ if platform == 'vscode': #never true, but helps vscode autocomplete IO variables
                             'MC_OPEN_1', 'MIXER_OPEN_1', 'MIXER_CLOSE_1', 
                             'OIL_ON_1', 'AERATOR_ON_1', 'AERATOR_ON_2', 'AERATOR_ON_3', 'DC_VIBRATOR_ON_1', 'DC_VIBRATOR_ON_2', 'DC_VIBRATOR_ON_3', 'FILTER_CLEAR_1', 
                             'AUGER_ON_1', 'AUGER_ON_2', 'AUGER_ON_3', 'WPUMP_ON_1', 'WPUMP_ON_2', 'APUMP_ON_1', 'APUMP_ON_2', 'APUMP_ON_3', 'APUMP_ON_4', 'APUMP_ON_5', 'APUMP_ON_6', 'APUMP_ON_7', 'APUMP_ON_8', 'APUMP_ON_9', 'APUMP_ON_10', 
-                            'CONVEYOR_ON_1', 'TCONVEYOR_ON_1', 'MIXER_STAR_1', 'MIXER_TRIA_1', 'OIL_PUMP_ON_1', 'S_VIBRATOR_ON_1', 'S_VIBRATOR_ON_2', 'S_VIBRATOR_ON_3', 'MC_FILTER_ON_1', 'MC_VIBRATOR_ON_1'))
+                            'CONVEYOR_ON_1', 'TCONVEYOR_ON_1', 'MIXER_ENABLE_1', 'MIXER_STAR_1', 'MIXER_TRIA_1', 'OIL_PUMP_ON_1', 'S_VIBRATOR_ON_1', 'S_VIBRATOR_ON_2', 'S_VIBRATOR_ON_3', 'MC_FILTER_ON_1', 'MC_VIBRATOR_ON_1'))
     plc = PLC()
 
 factory_1 = Factory()
-motor_1 = Motor(ison=plc.MIXER_ISON_1,star = plc.MIXER_STAR_1,tria = plc.MIXER_TRIA_1)
+motor_1 = Motor(ison=plc.MIXER_ISON_1,star = plc.MIXER_STAR_1,tria = plc.MIXER_TRIA_1,powered=plc.MIXER_ENABLE_1)
 gate_1 = Gate( closed = plc.MIXER_CLOSED_1, opened = plc.MIXER_OPENED_1, open = plc.MIXER_OPEN_1, close = plc.MIXER_CLOSE_1 )
+oil_pump_1 = TOF( clk=lambda: (plc.MIXER_CLOSED_1 and plc.MIXER_OPEN_1) or (plc.MIXER_OPENED_1 and plc.MIXER_CLOSE_1) or (not plc.MIXER_CLOSED_1 and not plc.MIXER_OPENED_1 and (plc.MIXER_OPEN_1 or plc.MIXER_CLOSE_1) ), q=plc.OIL_PUMP_ON_1,pt=3000)
+oil_1 = BLINK( enable=plc.MIXER_ENABLE_1,q=plc.OIL_ON_1,t_on=1000,t_off=60000)
 
 # все весы
 cement_m_1 = Weight(raw = plc.CEMENT_M_1,mmax=1500)
@@ -214,6 +216,7 @@ factory_1.bind(Factory.load,slave.set_load )
 factory_1.bind(Factory.heartbeat,slave.main.__class__.heartbeat)
 
 mcontainer_1 = ManualDosator( closed=plc.MC_CLOSED_1, out=plc.MC_OPEN_1,helper=plc.MC_VIBRATOR_ON_1,dosator=slave)
+filter_clear_1 = BLINK(enable=plc.MC_FILTER_ON_1, q = plc.FILTER_CLEAR_1, t_off=60000 )
 
 mixer_1 = Mixer(gate=gate_1, motor=motor_1, use_ack=False, flows=tuple(x.q for x in [
                 auger_1, auger_2, auger_3, 
@@ -294,7 +297,8 @@ other = ( factory_1,gate_1,motor_1,mixer_1,
           conveyor_1,tconveyor_1,mcontainer_1,
           ready_1,loaded_1,manager_1,
           slave,qreset,
-          aerator_1,aerator_2,aerator_3,dc_vibrator_1,dc_vibrator_2,dc_vibrator_3
+          aerator_1,aerator_2,aerator_3,dc_vibrator_1,dc_vibrator_2,dc_vibrator_3,
+          oil_pump_1,oil_1,filter_clear_1
         )
 
 stat = (0,0,0)

@@ -1823,13 +1823,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -1935,13 +1935,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2034,13 +2034,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2133,13 +2133,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2232,13 +2232,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2331,13 +2331,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2425,13 +2425,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
-    <property name="running">
-     <bool>true</bool>
-    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
+    </property>
+    <property name="running">
+     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2991,6 +2991,129 @@ QLabel:disabled[style=&quot;danger&quot;]
     <string>danger</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="svibrator_1">
+   <property name="geometry">
+    <rect>
+     <x>1087</x>
+     <y>116</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>helper</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="svibrator_2">
+   <property name="geometry">
+    <rect>
+     <x>1234</x>
+     <y>115</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>helper</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="svibrator_3">
+   <property name="geometry">
+    <rect>
+     <x>1372</x>
+     <y>116</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>helper</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="oil_pump_1">
+   <property name="geometry">
+    <rect>
+     <x>1120</x>
+     <y>881</y>
+     <width>24</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Гидростанция</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../resources/concrete.qrc">:/concrete/bolt.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="oil_1">
+   <property name="geometry">
+    <rect>
+     <x>1121</x>
+     <y>774</y>
+     <width>24</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Авто-смазчик</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../resources/concrete.qrc">:/concrete/bolt.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="filer_air_1">
+   <property name="geometry">
+    <rect>
+     <x>949</x>
+     <y>305</y>
+     <width>24</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Регенерация</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../resources/concrete.qrc">:/concrete/bolt.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
   <zorder>dosator_5</zorder>
   <zorder>container_16</zorder>
   <zorder>container_17</zorder>
@@ -3085,6 +3208,12 @@ QLabel:disabled[style=&quot;danger&quot;]
   <zorder>unloading</zorder>
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
+  <zorder>svibrator_1</zorder>
+  <zorder>svibrator_2</zorder>
+  <zorder>svibrator_3</zorder>
+  <zorder>oil_pump_1</zorder>
+  <zorder>oil_1</zorder>
+  <zorder>filer_air_1</zorder>
  </widget>
  <customwidgets>
   <customwidget>

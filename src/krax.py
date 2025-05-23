@@ -8,6 +8,8 @@ try:
     from machine import Pin
     import sys
     usr = Pin(36,Pin.IN)
+    rtc_cs = Pin(2,Pin.OUT,1)
+    eer_cs = Pin(2,Pin.OUT,1)
     if not usr.value():
         print('\tПереключатель USR включен.')
         import slave

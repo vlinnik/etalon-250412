@@ -149,7 +149,7 @@ instances = (
             df_vibrator_1,df_vibrator_2,df_vibrator_3
             )
 
-if platform=='linux' or True:
+if platform=='linux':
     from concrete.imitation import iVALVE,iWEIGHT
     idfiller_1 = iVALVE(open=plc.DFILLER_OPEN_1,closed=plc.DFILLER_CLOSED_1)
     idfiller_2 = iVALVE(open=plc.DFILLER_OPEN_2,closed=plc.DFILLER_CLOSED_2)

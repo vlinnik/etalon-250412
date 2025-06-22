@@ -12,6 +12,7 @@ from pyplc.utils.subscriber import Subscriber
 from pyplc.utils.latch import RS
 from pyplc.utils.trig import FTRIG
 from pyplc.utils.misc import BLINK,TOF
+from pyplc.ld import LD
 from concrete.vibrator import UnloadHelper
 
 print(f'\tЗапуск проекта {project_name}, управление цементом/водой/ХД/смесителем')
@@ -43,7 +44,8 @@ if platform == 'vscode': #never true, but helps vscode autocomplete IO variables
 factory_1 = Factory()
 motor_1 = Motor(ison=plc.MIXER_ISON_1,star = plc.MIXER_STAR_1,tria = plc.MIXER_TRIA_1,powered=plc.MIXER_ENABLE_1)
 gate_1 = Gate( closed = plc.MIXER_CLOSED_1, opened = plc.MIXER_OPENED_1, open = plc.MIXER_OPEN_1, close = plc.MIXER_CLOSE_1 )
-oil_pump_1 = TOF( clk=lambda: (plc.MIXER_CLOSED_1 and plc.MIXER_OPEN_1) or (plc.MIXER_OPENED_1 and plc.MIXER_CLOSE_1) or (not plc.MIXER_CLOSED_1 and not plc.MIXER_OPENED_1 and (plc.MIXER_OPEN_1 or plc.MIXER_CLOSE_1) ), q=plc.OIL_PUMP_ON_1,pt=3000)
+#oil_pump_1 = TOF( clk=lambda: (plc.MIXER_CLOSED_1 and plc.MIXER_OPEN_1) or (plc.MIXER_OPENED_1 and plc.MIXER_CLOSE_1) or (not plc.MIXER_CLOSED_1 and not plc.MIXER_OPENED_1 and (plc.MIXER_OPEN_1 or plc.MIXER_CLOSE_1) ), q=plc.OIL_PUMP_ON_1,pt=3000)
+oil_pump_1 = LD.any(plc.MIXER_OPEN_1,plc.MIXER_CLOSE_1).out(plc.OIL_PUMP_ON_1).end()
 oil_1 = BLINK( enable=plc.MIXER_ENABLE_1,q=plc.OIL_ON_1,t_on=1000,t_off=60000)
 
 # все весы
@@ -322,7 +324,7 @@ def term():
 
 instances = (profiler,)
 
-if platform=="linux" or True:
+if platform=="linux":
   from concrete.imitation import iGATE,iMOTOR,iVALVE,iWEIGHT,iROTARYFLOW
   from pyplc.utils.latch import RS 
   from pyplc.utils.misc import TON

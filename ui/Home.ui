@@ -230,7 +230,23 @@ QLabel:disabled[style=&quot;danger&quot;]
    <widget class="QLabel" name="opened_1">
     <property name="geometry">
      <rect>
-      <x>48</x>
+      <x>60</x>
+      <y>115</y>
+      <width>22</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/concrete.qrc">:/concrete/green.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="middle_1">
+    <property name="geometry">
+     <rect>
+      <x>39</x>
       <y>115</y>
       <width>22</width>
       <height>22</height>
@@ -986,7 +1002,7 @@ QLabel:disabled[style=&quot;danger&quot;]
   <widget class="QPushButton" name="vibrator_1">
    <property name="geometry">
     <rect>
-     <x>61</x>
+     <x>35</x>
      <y>126</y>
      <width>32</width>
      <height>32</height>
@@ -1081,7 +1097,7 @@ QLabel:disabled[style=&quot;danger&quot;]
   <widget class="QPushButton" name="vibrator_2">
    <property name="geometry">
     <rect>
-     <x>204</x>
+     <x>86</x>
      <y>127</y>
      <width>32</width>
      <height>32</height>
@@ -1274,7 +1290,7 @@ QLabel:disabled[style=&quot;danger&quot;]
   <widget class="QPushButton" name="vibrator_3">
    <property name="geometry">
     <rect>
-     <x>348</x>
+     <x>177</x>
      <y>125</y>
      <width>32</width>
      <height>32</height>
@@ -1351,7 +1367,7 @@ QLabel:disabled[style=&quot;danger&quot;]
   <widget class="QPushButton" name="vibrator_4">
    <property name="geometry">
     <rect>
-     <x>492</x>
+     <x>230</x>
      <y>125</y>
      <width>32</width>
      <height>32</height>
@@ -1602,7 +1618,7 @@ QLabel:disabled[style=&quot;danger&quot;]
   <widget class="QPushButton" name="vibrator_5">
    <property name="geometry">
     <rect>
-     <x>637</x>
+     <x>322</x>
      <y>125</y>
      <width>32</width>
      <height>32</height>
@@ -1621,7 +1637,7 @@ QLabel:disabled[style=&quot;danger&quot;]
   <widget class="QPushButton" name="vibrator_6">
    <property name="geometry">
     <rect>
-     <x>782</x>
+     <x>373</x>
      <y>124</y>
      <width>32</width>
      <height>32</height>
@@ -1823,13 +1839,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -1935,13 +1951,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2034,13 +2050,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2105,25 +2121,6 @@ QLabel:disabled[style=&quot;danger&quot;]
      <string>open</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="dvibrator_9">
-    <property name="geometry">
-     <rect>
-      <x>45</x>
-      <y>60</y>
-      <width>32</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-    <property name="style" stdset="0">
-     <string>helper</string>
-    </property>
-   </widget>
    <widget class="Animation" name="animation_22">
     <property name="geometry">
      <rect>
@@ -2133,13 +2130,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2147,7 +2144,6 @@ QLabel:disabled[style=&quot;danger&quot;]
    </widget>
    <zorder>animation_22</zorder>
    <zorder>dopen_10</zorder>
-   <zorder>dvibrator_9</zorder>
   </widget>
   <widget class="DosatorPanel" name="dpanel_9">
    <property name="geometry">
@@ -2204,25 +2200,6 @@ QLabel:disabled[style=&quot;danger&quot;]
      <string>open</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="dvibrator_10">
-    <property name="geometry">
-     <rect>
-      <x>45</x>
-      <y>60</y>
-      <width>32</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-    <property name="style" stdset="0">
-     <string>helper</string>
-    </property>
-   </widget>
    <widget class="Animation" name="animation_23">
     <property name="geometry">
      <rect>
@@ -2232,13 +2209,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2246,7 +2223,6 @@ QLabel:disabled[style=&quot;danger&quot;]
    </widget>
    <zorder>animation_23</zorder>
    <zorder>dopen_11</zorder>
-   <zorder>dvibrator_10</zorder>
   </widget>
   <widget class="DosatorPanel" name="dpanel_10">
    <property name="geometry">
@@ -2303,25 +2279,6 @@ QLabel:disabled[style=&quot;danger&quot;]
      <string>open</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="dvibrator_11">
-    <property name="geometry">
-     <rect>
-      <x>45</x>
-      <y>60</y>
-      <width>32</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-    <property name="style" stdset="0">
-     <string>helper</string>
-    </property>
-   </widget>
    <widget class="Animation" name="animation_24">
     <property name="geometry">
      <rect>
@@ -2331,13 +2288,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -2345,7 +2302,6 @@ QLabel:disabled[style=&quot;danger&quot;]
    </widget>
    <zorder>animation_24</zorder>
    <zorder>dopen_12</zorder>
-   <zorder>dvibrator_11</zorder>
   </widget>
   <widget class="Animation" name="conveyor_1">
    <property name="geometry">
@@ -2425,13 +2381,13 @@ QLabel:disabled[style=&quot;danger&quot;]
       <height>33</height>
      </rect>
     </property>
+    <property name="running">
+     <bool>false</bool>
+    </property>
     <property name="source">
      <url>
       <string>qrc:/concrete/fillers-rain.mng</string>
      </url>
-    </property>
-    <property name="running">
-     <bool>false</bool>
     </property>
     <property name="playbackHints">
      <set>Animation::Ceaseless</set>
@@ -3114,6 +3070,50 @@ QLabel:disabled[style=&quot;danger&quot;]
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="emergency_1">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>858</y>
+     <width>140</width>
+     <height>65</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>СТОП ИЛИ ДВЕРЦЫ</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>danger</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="pressure_1">
+   <property name="geometry">
+    <rect>
+     <x>458</x>
+     <y>857</y>
+     <width>140</width>
+     <height>65</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ДАВЛЕНИЕ НИЗКОЕ</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+   <property name="style" stdset="0">
+    <string>danger</string>
+   </property>
+  </widget>
   <zorder>dosator_5</zorder>
   <zorder>container_16</zorder>
   <zorder>container_17</zorder>
@@ -3214,32 +3214,34 @@ QLabel:disabled[style=&quot;danger&quot;]
   <zorder>oil_pump_1</zorder>
   <zorder>oil_1</zorder>
   <zorder>filer_air_1</zorder>
+  <zorder>emergency_1</zorder>
+  <zorder>pressure_1</zorder>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TConveyorPanel</class>
-   <extends>QGroupBox</extends>
-   <header>concreteui.tconveyorpanel</header>
-  </customwidget>
-  <customwidget>
    <class>DosatorPanel</class>
    <extends>QGroupBox</extends>
-   <header>concreteui.dosatorpanel</header>
+   <header>concreteui/dosatorpanel.h</header>
   </customwidget>
   <customwidget>
    <class>DoserPanel</class>
    <extends>QGroupBox</extends>
-   <header>concreteui.doserpanel</header>
+   <header>concreteui/doserpanel.h</header>
   </customwidget>
   <customwidget>
    <class>MixerPanel</class>
    <extends>QGroupBox</extends>
-   <header>concreteui.mixerpanel</header>
+   <header>concreteui/mixerpanel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TConveyorPanel</class>
+   <extends>QGroupBox</extends>
+   <header>concreteui/tconveyorpanel.h</header>
   </customwidget>
   <customwidget>
    <class>MContainerPanel</class>
    <extends>QGroupBox</extends>
-   <header>concreteui.mcontainerpanel</header>
+   <header>concreteui/mcontainerpanel.h</header>
   </customwidget>
   <customwidget>
    <class>Animation</class>

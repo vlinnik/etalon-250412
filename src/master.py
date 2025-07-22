@@ -31,7 +31,7 @@ if platform == 'vscode': #never true, but helps vscode autocomplete IO variables
                             'CONVEYOR_ISON_1', 'TCONVEYOR_ISON_1', 'MC_CLOSED_1', 'MC_OPENED_1', 'MIXER_ISON_1', 'MIXER_CLOSED_1', 'MIXER_MIDDLE_1', 'MIXER_OPENED_1', 
                             'LLEVEL_1', 'LLEVEL_2', 'LLEVEL_3', 'HLEVEL_1', 'HLEVEL_2', 'HLEVEL_3', 
                             'ROPE_1', 'ROPE_2', 'ADDITION_Q_1', 'ADDITION_Q_2','ADDITION_Q_3', 
-                            'DADDITION_ISEMPTY_8', 'DADDITION_ISEMPTY_9', 'DADDITION_ISEMPTY_10', 
+                            'DADDITION_ISEMPTY_8', 'DADDITION_ISEMPTY_9', 'DADDITION_ISEMPTY_10', 'DOORS_1',
                             'DCEMENT_OPEN_1', 'DCEMENT_OPEN_2', 'DCEMENT_OPEN_3', 
                             'DWATER_OPEN_1', 'DADDITION_OPEN_1', 'DADDITION_OPEN_2', 'DADDITION_OPEN_3', 'DADDITION_OPEN_4', 'DADDITION_OPEN_5', 'DADDITION_OPEN_6', 'DADDITION_OPEN_7', 'DADDITION_OPEN_8', 'DADDITION_OPEN_9', 'DADDITION_OPEN_10', 
                             'ADDITION_OPEN_1', 'ADDITION_OPEN_2', 'ADDITION_OPEN_3', 'ADDITION_OPEN_4', 'ADDITION_OPEN_5', 'ADDITION_OPEN_6', 'ADDITION_OPEN_7',
@@ -41,12 +41,14 @@ if platform == 'vscode': #never true, but helps vscode autocomplete IO variables
                             'CONVEYOR_ON_1', 'TCONVEYOR_ON_1', 'MIXER_ENABLE_1', 'MIXER_STAR_1', 'MIXER_TRIA_1', 'OIL_PUMP_ON_1', 'S_VIBRATOR_ON_1', 'S_VIBRATOR_ON_2', 'S_VIBRATOR_ON_3', 'MC_FILTER_ON_1', 'MC_VIBRATOR_ON_1'))
     plc = PLC()
 
+def motor_enable(power: bool):
+  plc.MIXER_ENABLE_1 = power and plc.DOORS_1
+    
 factory_1 = Factory()
-motor_1 = Motor(ison=plc.MIXER_ISON_1,star = plc.MIXER_STAR_1,tria = plc.MIXER_TRIA_1,powered=plc.MIXER_ENABLE_1)
-gate_1 = Gate( closed = plc.MIXER_CLOSED_1, opened = plc.MIXER_OPENED_1, open = plc.MIXER_OPEN_1, close = plc.MIXER_CLOSE_1 )
-#oil_pump_1 = TOF( clk=lambda: (plc.MIXER_CLOSED_1 and plc.MIXER_OPEN_1) or (plc.MIXER_OPENED_1 and plc.MIXER_CLOSE_1) or (not plc.MIXER_CLOSED_1 and not plc.MIXER_OPENED_1 and (plc.MIXER_OPEN_1 or plc.MIXER_CLOSE_1) ), q=plc.OIL_PUMP_ON_1,pt=3000)
-oil_pump_1 = LD.any(plc.MIXER_OPEN_1,plc.MIXER_CLOSE_1).out(plc.OIL_PUMP_ON_1).end()
-oil_1 = BLINK( enable=plc.MIXER_ENABLE_1,q=plc.OIL_ON_1,t_on=1000,t_off=60000)
+motor_1 = Motor(ison=plc.MIXER_ISON_1,star = plc.MIXER_STAR_1,tria = plc.MIXER_TRIA_1,powered=motor_enable,emergency = ~plc.DOORS_1 )
+gate_1 = Gate( closed = plc.MIXER_CLOSED_1, opened = plc.MIXER_OPENED_1, middle=plc.MIXER_MIDDLE_1, open = plc.MIXER_OPEN_1, close = plc.MIXER_CLOSE_1 )
+oil_pump_1 = LD.any( plc.MIXER_OPEN_1, plc.MIXER_CLOSE_1).out(plc.OIL_PUMP_ON_1).end()
+oil_1 = BLINK( enable=plc.MIXER_ENABLE_1,q=plc.OIL_ON_1,t_on=5000,t_off=60000)
 
 # все весы
 cement_m_1 = Weight(raw = plc.CEMENT_M_1,mmax=1500)
@@ -139,8 +141,8 @@ daddition_10 = ManualDosator( level = plc.DADDITION_ISEMPTY_10, out=plc.DADDITIO
 daddition_10.join('loaded',lambda: addition_10.loaded)
 
 #транспорт из под дозаторов инертных до промежуточной емкости, вопрос должен быть включен во время выгрузки или можно на выключенный
-tconveyor_1 = Transport( ison=plc.TCONVEYOR_ISON_1, power=plc.TCONVEYOR_ON_1,out=plc.CONVEYOR_ON_1,pt = 20)
-conveyor_1 = Transport( ison=plc.CONVEYOR_ISON_1, power=tconveyor_1.set_auto,pt=20)
+tconveyor_1 = Transport( ison=plc.TCONVEYOR_ISON_1, power=plc.TCONVEYOR_ON_1,out=plc.CONVEYOR_ON_1,pt = 20,lock = ~plc.ROPE_2)
+conveyor_1 = Transport( ison=plc.CONVEYOR_ISON_1, power=tconveyor_1.set_auto,pt=20,lock = ~plc.ROPE_1)
 
 class Slave(Subscriber):
   FIELDS= ('manual','emergency','go','busy','unload','unloading','tconveyor_ison','mc_opened_1','qreset','load','heartbeat')
@@ -262,14 +264,14 @@ factory_1.on_emergency = tuple( x.emergency for x in (
                       dwater_1, 
                       daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
                       daddition_8,daddition_9,daddition_10, 
-                      mixer_1,manager_1,water_1,mcontainer_1,slave
+                      mixer_1,manager_1,water_1,slave,mcontainer_1
                     ) )
 factory_1.on_mode = tuple( x.switch_mode for x in (
                       dcement_1, dcement_2, dcement_3, 
                       dwater_1, 
                       daddition_1,daddition_2,daddition_3,daddition_4,daddition_5,daddition_6,daddition_7,
                       daddition_8,daddition_9,daddition_10,
-                      mcontainer_1,slave
+                      slave,mcontainer_1
                     ) )
 
 def qreset():
@@ -302,29 +304,18 @@ other = ( factory_1,gate_1,motor_1,mixer_1,
           aerator_1,aerator_2,aerator_3,dc_vibrator_1,dc_vibrator_2,dc_vibrator_3,
           oil_pump_1,oil_1,filter_clear_1
         )
-
-stat = (0,0,0)
-from time import time_ns
-def profiler():
-  global stat
-  t1 = time_ns()
-  for f in additions:
-    if f: f( )    
-  t2 = time_ns()
-  for f in cements:
-    if f: f( )
-  t3 = time_ns()
-  for f in other:
-    if f: f( )
-  t4 = time_ns( )
-  stat = ((t2-t1)/(t4-t1)*100,(t3-t2)/(t4-t1)*100,(t4-t3)/(t4-t1)*100)
   
 def term():
   raise KeyboardInterrupt
 
-instances = (profiler,)
+instances = cements + additions + other
 
 if platform=="linux":
+  from pyplc.utils.misc import TON,TOF
+  plc.ROPE_1.force(True)
+  plc.ROPE_2.force(True)
+  plc.PRESSURE_1.force(True)
+  plc.DOORS_1.force(True)
   from concrete.imitation import iGATE,iMOTOR,iVALVE,iWEIGHT,iROTARYFLOW
   from pyplc.utils.latch import RS 
   from pyplc.utils.misc import TON
@@ -343,8 +334,8 @@ if platform=="linux":
   iaddition_q_9 = iROTARYFLOW( loading=plc.APUMP_ON_9, q = plc.ADDITION_Q_9 ) 
   iaddition_q_10 = iROTARYFLOW( loading=plc.APUMP_ON_10, q = plc.ADDITION_Q_10 )
   
-  imotor_1 = iMOTOR(simple = True,on = plc.MIXER_TRIA_1, ison=plc.MIXER_ISON_1 )
-  igate_1 = iGATE(open=plc.MIXER_OPEN_1,close=plc.MIXER_CLOSE_1,opened=plc.MIXER_OPENED_1,closed=plc.MIXER_CLOSED_1)
+  imotor_1 = iMOTOR(simple = True, on = plc.MIXER_ENABLE_1, ison=plc.MIXER_ISON_1 )
+  igate_1 = iGATE(open=plc.MIXER_OPEN_1,close=plc.MIXER_CLOSE_1,opened=plc.MIXER_OPENED_1,closed=plc.MIXER_CLOSED_1,middle=plc.MIXER_MIDDLE_1)
   
   iauger_1 = iMOTOR(simple=True,on=plc.AUGER_ON_1,ison=plc.AUGER_ISON_1)
   iauger_2 = iMOTOR(simple=True,on=plc.AUGER_ON_2,ison=plc.AUGER_ISON_2)
@@ -362,7 +353,7 @@ if platform=="linux":
   iapump_9 = iMOTOR(simple=True,on=plc.APUMP_ON_9,ison=plc.APUMP_ISON_9)
   iapump_10 = iMOTOR(simple=True,on=plc.APUMP_ON_10,ison=plc.APUMP_ISON_10)
   
-  idcement_1 = iVALVE(open=plc.DCEMENT_OPEN_1,closed=plc.DCEMENT_CLOSED_1)
+  idcement_1 = iVALVE(open=plc.DCEMENT_OPEN_2,closed=plc.DCEMENT_CLOSED_1)
   idcement_2 = iVALVE(open=plc.DCEMENT_OPEN_2,closed=plc.DCEMENT_CLOSED_2)
   idcement_3 = iVALVE(open=plc.DCEMENT_OPEN_3,closed=plc.DCEMENT_CLOSED_3)
   idwater_1 = iVALVE(open=plc.DWATER_OPEN_1,closed=plc.DWATER_CLOSED_1)

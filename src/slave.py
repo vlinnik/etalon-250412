@@ -9,6 +9,7 @@ from extension import Retarder as Accelerator
 from pyplc.pou import POU
 from pyplc.utils.trig import TRIG
 from pyplc.utils.latch import RS
+from pyplc.utils.misc import BLINK,TOF
 from concrete.manager import Loaded,Lock
 
 
@@ -78,6 +79,7 @@ class Slave(POU):
                 d.count = self.count
                 d.unload = self.unload and not self.unloading
                 d.go = self.go
+            self.t_unloading( )
             self.unloading = self.t_unloading( )
                         
             index = 14
@@ -119,19 +121,19 @@ twogate_6.container = filler_6
 
 slave = Slave( containers=(filler_1,filler_2,filler_3,filler_4,filler_5,filler_6) )
 
-dfiller_1 = Dosator( m = filler_m_1.get_m, out=plc.DFILLER_OPEN_1,closed=plc.DFILLER_CLOSED_1,containers=(filler_1,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_1.closed(),rst=(plc.DFILLER_OPEN_1,)))
-dfiller_2 = Dosator( m = filler_m_2.get_m, out=plc.DFILLER_OPEN_2,closed=plc.DFILLER_CLOSED_2,containers=(filler_2,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_2.closed(),rst=(plc.DFILLER_OPEN_2,)))
-dfiller_3 = Dosator( m = filler_m_3.get_m, out=plc.DFILLER_OPEN_3,closed=plc.DFILLER_CLOSED_3,containers=(filler_3,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_3.closed(),rst=(plc.DFILLER_OPEN_3,)))
-dfiller_4 = Dosator( m = filler_m_4.get_m, out=plc.DFILLER_OPEN_4,closed=plc.DFILLER_CLOSED_4,containers=(filler_4,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_4.closed(),rst=(plc.DFILLER_OPEN_4,)))
-dfiller_5 = Dosator( m = filler_m_5.get_m, out=plc.DFILLER_OPEN_5,closed=plc.DFILLER_CLOSED_5,containers=(filler_5,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_5.closed(),rst=(plc.DFILLER_OPEN_5,)))
-dfiller_6 = Dosator( m = filler_m_6.get_m, out=plc.DFILLER_OPEN_6,closed=plc.DFILLER_CLOSED_6,containers=(filler_6,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_6.closed(),rst=(plc.DFILLER_OPEN_6,)))
+dfiller_1 = Dosator( m = filler_m_1.get_m, out=BLINK(q=plc.DFILLER_OPEN_1),closed=plc.DFILLER_CLOSED_1,containers=(filler_1,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_1.closed(),rst=(plc.DFILLER_OPEN_1,)))
+dfiller_2 = Dosator( m = filler_m_2.get_m, out=BLINK(q=plc.DFILLER_OPEN_2),closed=plc.DFILLER_CLOSED_2,containers=(filler_2,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_2.closed(),rst=(plc.DFILLER_OPEN_2,)))
+dfiller_3 = Dosator( m = filler_m_3.get_m, out=BLINK(q=plc.DFILLER_OPEN_3),closed=plc.DFILLER_CLOSED_3,containers=(filler_3,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_3.closed(),rst=(plc.DFILLER_OPEN_3,)))
+dfiller_4 = Dosator( m = filler_m_4.get_m, out=BLINK(q=plc.DFILLER_OPEN_4),closed=plc.DFILLER_CLOSED_4,containers=(filler_4,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_4.closed(),rst=(plc.DFILLER_OPEN_4,)))
+dfiller_5 = Dosator( m = filler_m_5.get_m, out=BLINK(q=plc.DFILLER_OPEN_5),closed=plc.DFILLER_CLOSED_5,containers=(filler_5,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_5.closed(),rst=(plc.DFILLER_OPEN_5,)))
+dfiller_6 = Dosator( m = filler_m_6.get_m, out=BLINK(q=plc.DFILLER_OPEN_6),closed=plc.DFILLER_CLOSED_6,containers=(filler_6,),lock=Lock(key=lambda: not slave.tconveyor_ison or not twogate_6.closed(),rst=(plc.DFILLER_OPEN_6,)))
 
-vibrator_1 = Vibrator( q = plc.VIBRATOR_ON_1, containers = (plc.FILLER_OPEN_1,plc.FILLER_OPEN_2),weight=filler_m_1)
-vibrator_2 = Vibrator( q = plc.VIBRATOR_ON_2, containers = (plc.FILLER_OPEN_3,plc.FILLER_OPEN_4),weight=filler_m_2)
-vibrator_3 = Vibrator( q = plc.VIBRATOR_ON_3, containers = (plc.FILLER_OPEN_5,plc.FILLER_OPEN_6),weight=filler_m_3)
-vibrator_4 = Vibrator( q = plc.VIBRATOR_ON_4, containers = (plc.FILLER_OPEN_7,plc.FILLER_OPEN_8),weight=filler_m_4)
-vibrator_5 = Vibrator( q = plc.VIBRATOR_ON_5, containers = (plc.FILLER_OPEN_9,plc.FILLER_OPEN_10),weight=filler_m_5)
-vibrator_6 = Vibrator( q = plc.VIBRATOR_ON_6, containers = (plc.FILLER_OPEN_11,plc.FILLER_OPEN_12),weight=filler_m_6)
+vibrator_1 = Vibrator( q = plc.VIBRATOR_ON_1, containers = (plc.FILLER_OPEN_1,),weight=filler_m_1)
+vibrator_2 = Vibrator( q = plc.VIBRATOR_ON_2, containers = (plc.FILLER_OPEN_2,),weight=filler_m_1)
+vibrator_3 = Vibrator( q = plc.VIBRATOR_ON_3, containers = (plc.FILLER_OPEN_3,),weight=filler_m_2)
+vibrator_4 = Vibrator( q = plc.VIBRATOR_ON_4, containers = (plc.FILLER_OPEN_4,),weight=filler_m_2)
+vibrator_5 = Vibrator( q = plc.VIBRATOR_ON_5, containers = (plc.FILLER_OPEN_5,),weight=filler_m_3)
+vibrator_6 = Vibrator( q = plc.VIBRATOR_ON_6, containers = (plc.FILLER_OPEN_6,),weight=filler_m_3)
 
 df_vibrator_1 = UnloadHelper( q=plc.DF_VIBRATOR_ON_1, dosator=dfiller_1, weight=filler_m_1 )
 df_vibrator_2 = UnloadHelper( q=plc.DF_VIBRATOR_ON_2, dosator=dfiller_2, weight=filler_m_2 )

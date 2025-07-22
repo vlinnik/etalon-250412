@@ -1,9 +1,13 @@
 import sys
 from pysca import app
 from pysca.device import PYPLC
+from pyplc.utils.misc import TOF
+from pyplc.utils.trig import RTRIG
 from concrete6 import concrete6
 import pygui.multihead as navbar
 from AnyQt.QtCore import QThread,QCoreApplication
+
+alive = TOF(clk = RTRIG(clk=app.ctx['HEARTBEAT_1']),pt=5000)
 
 def whats_inside(*args):
     try:
@@ -56,6 +60,8 @@ def main():
     concrete6.reload( )
     navbar.instance.setWindowTitle('АСУ БСУ ЭТАЛОН-250412 (с) 2025, ЭТАЛОН-ПРО')
     navbar.instance.show( )
+    app.bindings(Home.heartbeat,enabled = '(alive(),SECOND)[0]',ctx=globals())
+    
     # или 
     # Home.show()               
     

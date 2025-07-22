@@ -13,16 +13,8 @@ AnyQt, PyQt5, pyplc, pysca, pygui
 
 # Установка
 
-Если есть сборка pyinstaller то ее необходимо 
 
-- скопировать в /usr/local/ и выполнить 
-- скопировать .desktop в /usr/share/applications/ и выполнить
-
-```
-xdg-desktop-menu install --novendor --mode user /usr/share/applications/pysca-hmi.desktop
-```
-
-Если запускаем из исходников, то
+# Запуск из исходников
 
 ```
 python3 <SOURCE_DIR_LOCATION>/__main__.py -w <SOURCE_DIR_LOCATION>

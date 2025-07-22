@@ -114,6 +114,12 @@ QAbstractButton:flat::checked[style=&quot;warning&quot;]
 	background-color: rgb(46, 194, 126);
 	color: white;
 }
+QWidget[style=&quot;panel&quot;]
+{
+	background-color: rgb(61, 56, 70);
+	border: 2px solid gray;
+	border-radius: 4px;
+}
 </string>
   </property>
   <widget class="QWidget" name="dgroup_8" native="true">
@@ -2192,17 +2198,49 @@ padding: 10px;</string>
     <string>sys</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>1014</x>
+     <y>451</y>
+     <width>453</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Дополнительные настройки работы</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+   <property name="style" stdset="0">
+    <string>sys</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>632</x>
+     <y>472</y>
+     <width>839</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="style" stdset="0">
+    <string notr="true">panel</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>DosatorPanel</class>
    <extends>QGroupBox</extends>
-   <header>concreteui.dosatorpanel</header>
+   <header>concreteui/dosatorpanel.h</header>
   </customwidget>
   <customwidget>
    <class>DoserPanel</class>
    <extends>QGroupBox</extends>
-   <header>concreteui.doserpanel</header>
+   <header>concreteui/doserpanel.h</header>
   </customwidget>
   <customwidget>
    <class>Animation</class>
@@ -2212,13 +2250,8 @@ padding: 10px;</string>
   </customwidget>
   <customwidget>
    <class>RuntimeTrend</class>
-   <extends>QwtPlot</extends>
+   <extends>QWidget</extends>
    <header>pygui.runtimetrend</header>
-  </customwidget>
-  <customwidget>
-   <class>QwtPlot</class>
-   <extends>QFrame</extends>
-   <header>qwt_plot.h</header>
   </customwidget>
  </customwidgets>
  <resources>
